@@ -23,6 +23,28 @@ public class Result<T> {
     }
 
     /**
+     * 成功时无数据返回构造函数
+     * @param code  状态码
+     * @param msg   返回信息
+     */
+    private Result(int code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
+
+    /**
+     * 自定义返回信息
+     * @param code  状态码
+     * @param msg   信息
+     * @param data  数据
+     */
+    private Result(int code, String msg, T data) {
+        this.code = code;
+        this.msg = msg;
+        this.data = data;
+    }
+
+    /**
      * 失败时构造函数
      * @param codeMsg   状态码和错误信息
      */
@@ -43,6 +65,25 @@ public class Result<T> {
         return new Result<>(data);
     }
 
+    /**
+     * 成功时无数据返回
+     * @param code  状态码
+     * @param msg   返回信息
+     * @return  Result对象
+     */
+    public static <T> Result<T> success(int code, String msg) {
+        return new Result<>(code, msg);
+    }
+
+    /**
+     * 自定义信息
+     * @param code  状态码
+     * @param msg   信息
+     * @param data  数据
+     */
+    public static <T> Result<T> success(int code, String msg, T data) {
+        return new Result<>(code, msg, data);
+    }
 
     /**
      * 失败时调用
