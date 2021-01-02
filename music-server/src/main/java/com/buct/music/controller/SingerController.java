@@ -144,6 +144,11 @@ public class SingerController {
         }
     }
 
+    /**
+     * 根据歌手性别查询歌手
+     * @param sex   1：男；0：女
+     * @return  Result<List<Singer>>
+     */
     @GetMapping("singers/sex")
     public Result<List<Singer>> getSingerBySex(@RequestParam Integer sex) {
         if (!sex.equals(SexEnum.MALE.getState()) && !sex.equals(SexEnum.FEMALE.getState())) {
