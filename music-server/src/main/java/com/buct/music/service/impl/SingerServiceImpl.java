@@ -4,9 +4,9 @@ import com.buct.music.controller.dto.SingerReq;
 import com.buct.music.dao.SingerMapper;
 import com.buct.music.domin.Singer;
 import com.buct.music.service.SingerService;
+import com.buct.music.utils.SingerServiceUtil;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,31 +25,14 @@ public class SingerServiceImpl implements SingerService {
     // 增加歌手
     @Override
     public boolean insert(SingerReq singerReq) {
-        String name = singerReq.getName().trim();
-        Boolean sex = singerReq.getSex();
-        String pic = singerReq.getPic().trim();
-        Date birth = singerReq.getBirth();
-        String location = singerReq.getLocation().trim();
-        String introduction = singerReq.getIntroduction().trim();
-
-        Singer singer = new Singer();
-        singer.setName(name);
-        singer.setSex(sex);
-        singer.setPic(pic);
-        singer.setBirth(birth);
-        singer.setLocation(location);
-        singer.setIntroduction(introduction);
-
-        long timeNow = System.currentTimeMillis();
-        singer.setCreateTime(timeNow);
-        singer.setUpdateTime(timeNow);
-
+        Singer singer = SingerServiceUtil.singerUtil(singerReq);
         return singerMapper.insert(singer) > 0;
     }
 
     // 修改歌手
     @Override
-    public boolean update(Singer singer) {
+    public boolean update(SingerReq singerReq) {
+        Singer singer = SingerServiceUtil.singerUtil(singerReq);
         return singerMapper.update(singer) > 0;
     }
 
@@ -74,12 +57,14 @@ public class SingerServiceImpl implements SingerService {
     // 根据歌手名字模糊查询
     @Override
     public List<Singer> selectByName(String name) {
-        return singerMapper.selectByName(name);
+        String likeName = name.trim();
+        return singerMapper.selectByName("%" + likeName + "%");
     }
 
     // 根据男女查询
     @Override
-    public List<Singer> selectBySex(Boolean sex) {
-        return singerMapper.selectBySex(sex);
+    public List<Singer> selectBySex(Integer sex) {
+        Boolean sexFlag = sex == 1;
+        return singerMapper.selectBySex(sexFlag);
     }
 }
