@@ -65,6 +65,10 @@ public class Result<T> {
         return new Result<>(data);
     }
 
+    public static <T> Result<T> success(CodeMsg codeMsg) {
+        return new Result<>(codeMsg);
+    }
+
     /**
      * 成功时无数据返回
      * @param code  状态码

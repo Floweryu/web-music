@@ -28,14 +28,16 @@ public class AdminController {
     public Result<CodeMsg> loginStatus(@RequestParam String username, @RequestParam String password) {
         try {
             boolean flag = adminService.verifyPassword(username, password);
-            log.info("参数信息为：username: {}, password: {}", username, password);
+            log.info("登录用户信息为：username: {}, password: {}", username, password);
             if (flag) {
-                return Result.success(0, "login success");
+                return Result.success(CodeMsg.LOGIN_SUCCESS);
+            } else {
+                return Result.error(CodeMsg.LOGIN_FAILURE);
             }
         } catch (Throwable throwable) {
-            log.error("参数信息为:username: {}, password: {}", username, password);
+            log.error("There is something error: {}", throwable.getMessage());
             return Result.error(CodeMsg.SERVER_ERROR);
         }
-        return Result.error(CodeMsg.LOGIN_FAILURE);
+
     }
 }

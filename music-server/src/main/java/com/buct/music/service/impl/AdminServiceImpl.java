@@ -22,6 +22,7 @@ public class AdminServiceImpl implements AdminService {
      * @param password  密码
      * @return  存在：true，否则：false
      */
+    @Override
     public boolean verifyPassword(String username, String password) {
         return adminMapper.verifyPassword(username, password) > 0;
     }
