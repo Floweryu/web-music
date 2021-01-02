@@ -1,9 +1,15 @@
+### springboot ###
 HELP.md
 target/
 logs/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+
+### vue ###
+node_modules
+/dist
+
 
 ### STS ###
 .apt_generated
@@ -34,12 +40,6 @@ build/
 .vscode/
 .DS_Store
 
-### vue ###
-.DS_Store
-node_modules
-/dist
-
-
 # local env files
 .env.local
 .env.*.local
@@ -51,8 +51,6 @@ yarn-error.log*
 pnpm-debug.log*
 
 # Editor directories and files
-.idea
-.vscode
 *.suo
 *.ntvs*
 *.njsproj
