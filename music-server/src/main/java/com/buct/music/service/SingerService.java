@@ -14,7 +14,7 @@ public interface SingerService {
     boolean insert(SingerReq singerReq);
 
     // 需改歌手
-    boolean update(Singer singer);
+    boolean update(SingerReq singerReq);
 
     // 删除歌手
     boolean delete(Long id);
@@ -29,5 +29,5 @@ public interface SingerService {
     List<Singer> selectByName(String name);
 
     // 根据男女查询
-    List<Singer> selectBySex(Boolean sex);
+    List<Singer> selectBySex(Integer sex);
 }

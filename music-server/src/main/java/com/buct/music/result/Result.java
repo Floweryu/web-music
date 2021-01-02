@@ -45,7 +45,7 @@ public class Result<T> {
     }
 
     /**
-     * 失败时构造函数
+     * 构造函数
      * @param codeMsg   状态码和错误信息
      */
     private Result(CodeMsg codeMsg) {
@@ -56,45 +56,48 @@ public class Result<T> {
         this.msg = codeMsg.getMsg();
     }
     /**
-     * 成功时调用
-     * @param data  返回值
-     * @param <T>   类型
-     * @return  Result对象
+     * 自定义 data
      */
     public static <T> Result<T> success(T data) {
         return new Result<>(data);
     }
 
-    public static <T> Result<T> success(CodeMsg codeMsg) {
-        return new Result<>(codeMsg);
-    }
-
     /**
-     * 成功时无数据返回
-     * @param code  状态码
-     * @param msg   返回信息
-     * @return  Result对象
+     * 自定义 code 和 msg
      */
     public static <T> Result<T> success(int code, String msg) {
         return new Result<>(code, msg);
     }
 
     /**
-     * 自定义信息
-     * @param code  状态码
-     * @param msg   信息
-     * @param data  数据
+     * 自定义 code, msg, data
      */
     public static <T> Result<T> success(int code, String msg, T data) {
         return new Result<>(code, msg, data);
     }
 
     /**
-     * 失败时调用
+     * 全局成功信息
+     */
+    public static <T> Result<T> success(CodeMsg codeMsg) {
+        return new Result<>(codeMsg);
+    }
+
+
+
+    /**
+     * 全局错误信息
      * @param codeMsg   状态码和错误信息
      * @return  Result对象
      */
     public static <T> Result<T> error(CodeMsg codeMsg) {
         return new Result<>(codeMsg);
+    }
+
+    /**
+     * 自定义错误 code, msg
+     */
+    public static <T> Result<T> error(int code, String msg) {
+        return new Result<>(code, msg);
     }
 }
