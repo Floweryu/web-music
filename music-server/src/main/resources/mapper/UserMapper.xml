@@ -105,4 +105,61 @@
         from user
         where id = #{id}
     </select>
+
+    <delete id="delete" parameterType="java.lang.Long">
+        delete
+        from user
+        where id = #{id}
+    </delete>
+
+    <update id="update" parameterType="com.buct.music.domin.User">
+        update user
+        <set>
+            <if test="username !=null">
+                username = #{username},
+            </if>
+            <if test="password !=null">
+                password = #{password},
+            </if>
+            <if test="sex !=null">
+                sex = #{sex},
+            </if>
+            <if test="phoneNumber !=null">
+                phone_num = #{phoneNumber},
+            </if>
+            <if test="email !=null">
+                email = #{email},
+            </if>
+            <if test="birth !=null">
+                birth = #{birth},
+            </if>
+            <if test="introduction !=null">
+                introduction = #{introduction},
+            </if>
+            <if test="avator !=null">
+                avator = #{avator},
+            </if>
+            <if test="location !=null">
+                location = #{location},
+            </if>
+            <if test="createTime !=null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime !=null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="selectAllUsers" resultMap="BaseResultMap">
+        select *
+        from user
+    </select>
+
+    <select id="selectUserByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select *
+        from user
+        where username like #{username}
+    </select>
 </mapper>
