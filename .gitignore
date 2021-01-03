@@ -2,6 +2,9 @@
 HELP.md
 target/
 logs/
+img/
+song/
+avatorImg/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
