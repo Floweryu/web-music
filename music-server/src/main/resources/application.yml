@@ -1,0 +1,11 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: music
+  profiles:
+    active: local
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
