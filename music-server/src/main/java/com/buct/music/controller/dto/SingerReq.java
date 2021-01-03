@@ -11,6 +11,9 @@ import java.util.Date;
  */
 @Data
 public class SingerReq implements Serializable {
+    //主键id
+    private Long id;
+
     // 歌手名
     private String name;
 

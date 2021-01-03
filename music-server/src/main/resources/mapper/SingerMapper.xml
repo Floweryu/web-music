@@ -132,7 +132,7 @@
         select
         <include refid="Base_Column_List" />
         from singer
-        where name like = #{name}
+        where name like #{name}
     </select>
 
     <select id="selectBySex" resultMap="BaseResultMap" parameterType="java.lang.Boolean">
