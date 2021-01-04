@@ -11,7 +11,7 @@
  Target Server Version : 80020
  File Encoding         : 65001
 
- Date: 02/01/2021 12:33:50
+ Date: 04/01/2021 18:24:08
 */
 
 SET NAMES utf8mb4;
@@ -63,9 +63,9 @@ CREATE TABLE `list_song`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `singer`;
 CREATE TABLE `singer`  (
-  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '自增主键',
+  `id` bigint(20) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT '自增主键',
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '歌手姓名',
-  `sex` tinyint(1) NULL DEFAULT NULL COMMENT '1：男；0：女',
+  `sex` tinyint(0) NULL DEFAULT NULL COMMENT '1：男；0：女; 2: 组合',
   `pic` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '头像',
   `birth` date NULL DEFAULT NULL COMMENT '生日：1999-02-14',
   `location` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '地区',
