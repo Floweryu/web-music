@@ -13,7 +13,7 @@ public class SingerServiceUtil {
     public static Singer singerUtil(SingerReq singerReq) {
         Long id = singerReq.getId();
         String name = singerReq.getName();
-        Boolean sex = singerReq.getSex();
+        Integer sex = singerReq.getSex();
         String pic = singerReq.getPic();
         Date birth = singerReq.getBirth();
         String location = singerReq.getLocation();

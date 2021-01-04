@@ -17,8 +17,8 @@ public class Singer implements Serializable {
     // 歌手名
     private String name;
 
-    // 歌手性别：1：男；0：女
-    private Boolean sex;
+    // 歌手性别：1：男；0：女; 2：组合
+    private Integer sex;
 
     // 头像
     private String pic;

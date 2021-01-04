@@ -13,16 +13,15 @@ if (['dev'].includes(env)) {
     port: 8080, // 端口号
     host: '0.0.0.0',
     disableHostCheck: true,
-    // proxy: {
-    //   //登陆接口
-    //   '/': {
-    //     target: '',
-    //     changeOrigin: true,
-    //     cookieDomainRewrite: {
-    //       '*': ''
-    //     }
-    //   }
-    // }
+    proxy: {
+      '/': {
+        target: 'http://localhost:8888',
+        changeOrigin: true,
+        cookieDomainRewrite: {
+          '*': ''
+        }
+      }
+    }
   }
 }
 
