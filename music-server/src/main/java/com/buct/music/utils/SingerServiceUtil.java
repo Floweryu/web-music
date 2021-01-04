@@ -12,9 +12,7 @@ import java.util.Date;
 public class SingerServiceUtil {
     public static Singer singerUtil(SingerReq singerReq) {
         Long id = singerReq.getId();
-        String name = singerReq.getName().trim();
-        Boolean sex = singerReq.getSex();
-        String pic = singerReq.getPic().trim();
+
         Date birth = singerReq.getBirth();
         String location = singerReq.getLocation().trim();
         String introduction = singerReq.getIntroduction().trim();

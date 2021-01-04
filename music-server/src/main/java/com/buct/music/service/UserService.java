@@ -29,4 +29,6 @@ public interface UserService {
 
     //根据username模糊查找用户
     List<User> selectUserByName(String username);
+
+    boolean verifyPassword(String username, String password);
 }

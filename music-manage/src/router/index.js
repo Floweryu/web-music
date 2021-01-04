@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 const Index = () => import('@/views/index')
 
 const SingerManage = () => import('@/components/SingerManage')
+const UserManage = () => import('@/components/UserManage')
 
 Vue.use(VueRouter)
 
@@ -20,6 +21,11 @@ const routes = [
         path: 'singer',
         component: SingerManage,
         meta: { title: '歌手管理' }
+      },
+      {
+        path: 'user',
+        component: UserManage,
+        meta: { title: '用户管理'}
       }
     ]
   }

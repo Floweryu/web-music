@@ -2,5 +2,5 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/music?serverTimezone=Asia/Shanghai&useSSL=false&useUnicode=true&characterEncoding=utf-8
     username: root
-    password: chezijie
+    password: mysql
     driver-class-name: com.mysql.cj.jdbc.Driver

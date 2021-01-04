@@ -60,4 +60,9 @@ public class UserServiceImpl implements UserService {
     public List<User> selectUserByName(String username) {
         return userMapper.selectUserByName("%" + username + "%");
     }
+
+    @Override
+    public boolean verifyPassword(String username, String password) {
+        return userMapper.verifyPassword(username, password) > 0;
+    }
 }
