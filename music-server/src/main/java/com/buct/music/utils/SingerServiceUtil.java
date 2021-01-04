@@ -12,6 +12,9 @@ import java.util.Date;
 public class SingerServiceUtil {
     public static Singer singerUtil(SingerReq singerReq) {
         Long id = singerReq.getId();
+
+
+        
         Date birth = singerReq.getBirth();
         String location = singerReq.getLocation().trim();
         String introduction = singerReq.getIntroduction().trim();
