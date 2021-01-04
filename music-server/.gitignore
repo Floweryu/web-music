@@ -13,8 +13,12 @@ target/
 .springBeans
 .sts4-cache
 
+### Song Path ###
+data
+
 ### IntelliJ IDEA ###
 .idea
+.gradle
 *.iws
 *.iml
 *.ipr

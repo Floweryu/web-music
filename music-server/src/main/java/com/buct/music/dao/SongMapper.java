@@ -21,10 +21,10 @@ public interface SongMapper {
     int update(Song song);
 
     // 删除歌曲
-    int delete(long id);
+    int delete(Long id);
 
     // 根据id查找某个歌曲
-    Song selectByPrimaryKey(long id);
+    Song selectByPrimaryKey(Long id);
 
     // 查询所有歌曲
     List<Song> selectAllSongs();
