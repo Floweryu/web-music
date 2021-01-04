@@ -26,9 +26,6 @@ public class SingerServiceImpl implements SingerService {
     @Override
     public boolean insert(SingerReq singerReq) {
         Singer singer = SingerServiceUtil.singerUtil(singerReq);
-        long timeNow = System.currentTimeMillis();
-        singer.setCreateTime(timeNow);
-        singer.setUpdateTime(timeNow);
         return singerMapper.insert(singer) > 0;
     }
 
@@ -36,8 +33,6 @@ public class SingerServiceImpl implements SingerService {
     @Override
     public boolean update(SingerReq singerReq) {
         Singer singer = SingerServiceUtil.singerUtil(singerReq);
-        long timeNow = System.currentTimeMillis();
-        singer.setUpdateTime(timeNow);
         return singerMapper.update(singer) > 0;
     }
 
