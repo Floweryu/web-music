@@ -27,7 +27,7 @@ var instance = axios.create({
 instance.interceptors.response.use(
   response => {
     if (response.status === 200) {
-      return response
+      return response.data
     } else {
       return Promise.reject(response)
     }

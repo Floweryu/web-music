@@ -30,4 +30,7 @@ public interface SingerService {
 
     // 根据男女查询
     List<Singer> selectBySex(Integer sex);
+
+    // 根据歌手名查找歌手id
+    Long getSingerId(String name);
 }
