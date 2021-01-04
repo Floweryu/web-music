@@ -66,10 +66,9 @@ public class SingerServiceImpl implements SingerService {
         return singerMapper.selectByName("%" + likeName + "%");
     }
 
-    // 根据男女查询
+    // 根据性别查询
     @Override
     public List<Singer> selectBySex(Integer sex) {
-        Boolean sexFlag = sex == 1;
-        return singerMapper.selectBySex(sexFlag);
+        return singerMapper.selectBySex(sex);
     }
 }

@@ -155,7 +155,9 @@ public class SingerController {
      */
     @GetMapping("/singers/sex")
     public Result<List<Singer>> getSingerBySex(@RequestParam Integer sex) {
-        if (!sex.equals(SexEnum.MALE.getState()) && !sex.equals(SexEnum.FEMALE.getState())) {
+        if (!sex.equals(SexEnum.MALE.getState())
+            && !sex.equals(SexEnum.FEMALE.getState())
+            && !sex.equals(SexEnum.GROUP.getState())) {
             return Result.error(400, "sex must be 1(male) or 0(female)!");
         }
         try {
