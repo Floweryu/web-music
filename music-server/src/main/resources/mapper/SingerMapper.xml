@@ -141,4 +141,8 @@
         from singer
         where sex = #{sex}
     </select>
+    
+    <select id="getSingerId" resultType="java.lang.Long" parameterType="java.lang.String">
+        select id from singer where name = #{name}
+    </select>
 </mapper>

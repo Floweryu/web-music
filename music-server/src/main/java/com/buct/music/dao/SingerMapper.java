@@ -33,4 +33,7 @@ public interface SingerMapper {
 
     // 根据性别查询
     List<Singer> selectBySex(Integer sex);
+
+    // 根据歌手名查找歌手id
+    Long getSingerId(String name);
 }
