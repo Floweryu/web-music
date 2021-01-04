@@ -71,4 +71,10 @@ public class SingerServiceImpl implements SingerService {
     public List<Singer> selectBySex(Integer sex) {
         return singerMapper.selectBySex(sex);
     }
+
+    // 根据歌手名查找歌手id
+    @Override
+    public Long getSingerId(String name) {
+        return singerMapper.getSingerId(name);
+    }
 }
