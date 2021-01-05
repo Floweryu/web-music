@@ -3,9 +3,9 @@
  */
 
 import singer from './singer.api'
-import user from './user.api'
+import songs from './songs.api'
 
 export default {
   singer,
-  user
+  songs
 }
