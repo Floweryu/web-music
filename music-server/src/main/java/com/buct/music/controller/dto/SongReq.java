@@ -12,10 +12,10 @@ import java.io.Serializable;
 @Data
 public class SongReq implements Serializable {
     // 自增主键
-    private long id;
+    private Long id;
 
-    // 对应歌手id
-    private long singerId;
+    // 对应歌手姓名
+    private String singerName;
 
     // 歌名
     private String name;

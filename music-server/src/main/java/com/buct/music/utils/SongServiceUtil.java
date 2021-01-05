@@ -3,13 +3,11 @@ package com.buct.music.utils;
 import com.buct.music.controller.dto.SongReq;
 import com.buct.music.domin.Song;
 
-import java.util.Date;
-
 public class SongServiceUtil {
     public static Song songUtil(SongReq songReq) {
         Long id = songReq.getId();
-        Long singerId = songReq.getSingerId();
         String name = songReq.getName();
+        String singerName = songReq.getSingerName();
         String pic = songReq.getPic();
         String url = songReq.getUrl();
         String introduction = songReq.getIntroduction();
@@ -18,7 +16,9 @@ public class SongServiceUtil {
         if (id != null) {
             song.setId(id);
         }
-        if (singerId != null) {
+        if (singerName != null) {
+            // 先要根据歌手姓名调用歌手id;
+            Long singerId = Long.valueOf(255);  // 临时代码，暂时补充业务层逻辑
             song.setSingerId(singerId);
         }
         if (name != null) {

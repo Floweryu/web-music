@@ -22,7 +22,7 @@
             <if test="id != null">
                 id,
             </if>
-            <if test="singer_id != null">
+            <if test="singerName != null">
                 singer_id,
             </if>
             <if test="name != null">
@@ -48,8 +48,8 @@
             <if test="id != null">
                 #{id},
             </if>
-            <if test="singer_id != null">
-                #{singer_id}
+            <if test="singerName != null">
+                #{singerName}
             </if>
             <if test="name != null">
                 #{name},
@@ -78,8 +78,8 @@
             <if test="name != null">
                 name = #{name},
             </if>
-            <if test="singer_id != null">
-                sex = #{singer_id},
+            <if test="singerId != null">
+                sex = #{singerId},
             </if>
             <if test="pic != null">
                 pic = #{pic},
