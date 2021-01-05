@@ -45,10 +45,13 @@ const menuList = [
     icon: 'el-icon-s-platform'
   },
   {
+<<<<<<< HEAD
     title: '用户管理',
     index: '/dashboard/user',
   },
   {
+=======
+>>>>>>> 49504b8ff9eb305a5a72ff2e5e4b62a3d5b9274f
     title: '歌曲管理',
     index: '/dashboard/song',
     icon: 'el-icon-s-platform'
