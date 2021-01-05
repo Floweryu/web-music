@@ -1,5 +1,6 @@
 <template>
   <div class="singer">
+    <header-top />
     <el-card class="body">
       <el-table
         :data="tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)"
@@ -59,11 +60,16 @@
 </template>
 
 <script>
+import HeaderTop from '@/components/common/HeaderTop'
+
 import { formatDate } from '@/utils/index'
 import { pageSeparate } from '@/utils/mixin'
 
 export default {
   name: 'SingerManage',
+  components: {
+    HeaderTop
+  },
   mixins: [pageSeparate],
   data() {
     return {
@@ -141,6 +147,9 @@ export default {
 </script>
 
 <style>
+.el-card__body {
+  padding: 5px;
+}
 .el-tooltip__popper {
   max-width: 300px;
 }
