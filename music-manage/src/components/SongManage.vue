@@ -1,5 +1,5 @@
 <template>
-  <div class="singer">
+  <div class="song">
     <el-card class="body">
       <el-table
         :data="tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)"
@@ -8,11 +8,11 @@
         border
         stripe
       >
-        <el-table-column prop="pic" label="图片" min-width="10%" align="center" />
-        <el-table-column prop="name" label="姓名" min-width="10%" align="center" />
-        <el-table-column prop="sex" label="性别" min-width="5%" align="center" />
-        <el-table-column prop="birth" label="生日" min-width="10%" align="center" />
-        <el-table-column prop="location" label="地区" min-width="10%" align="center" />
+        <el-table-column prop="pic" label="封面图" min-width="10%" align="center" />
+        <el-table-column prop="name" label="歌名" min-width="10%" align="center" />
+        <el-table-column prop="singerId" label="歌手id" min-width="5%" align="center" />
+        <el-table-column prop="singerName" label="歌手" min-width="5%" align="center" />
+        <el-table-column prop="url" label="路径" min-width="10%" align="center" />
         <el-table-column prop="introduction" label="简介" min-width="20%" align="center" />
         <el-table-column label="操作" min-width="10%" align="center">
           <template slot-scope="scope">
@@ -47,11 +47,10 @@
 </template>
 
 <script>
-import { formatDate } from '@/utils/index'
 import { pageSeparate } from '@/utils/mixin'
 
 export default {
-  name: 'SingerManage',
+  name: 'SongManage',
   mixins: [pageSeparate],
   data() {
     return {
@@ -59,18 +58,32 @@ export default {
     }
   },
   created() {
-    this.$http.singer.getAllSinger().then(res => {
+    this.$http.songs.getAllSongs().then(res => {
       if (res.code === 0 && res.data) {
         let data = res.data
         data.forEach(item => {
-          if (item.birth) {
-            let time = new Date(item.birth)
-            item.birth = formatDate(time, 'yyyy-MM-dd')
-          }
+          this.$http.singer
+            .getSingerById({
+              params: {
+                id: item.singerId
+              }
+            })
+            .then(res => {
+              let singerName = res.data.name
+              Object.defineProperty(item, 'singerName', {
+                get() {
+                  return singerName
+                }
+              })
+            })
         })
-        this.tableData = res.data
+        this.tableData = data
       }
+      console.log(this.tableData)
     })
+  },
+  updated() {
+    console.log(this.tableData)
   },
   methods: {
     edit() {},
