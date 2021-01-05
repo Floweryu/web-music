@@ -32,4 +32,7 @@ public interface UserMapper {
     // 根据用户名字模糊查询
     List<User> selectUserByName(String username);
 
+    // 验证密码
+    int verifyPassword(String username, String password);
+
 }

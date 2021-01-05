@@ -1,7 +1,6 @@
 package com.buct.music.enums;
 
 /**
- * 性别枚举类
  * @author Zhang JunFeng
  * @date 2021/1/2 17:44
  */
@@ -13,7 +12,7 @@ public enum SexEnum {
     FEMALE(0),
     GROUP(2);
 
-    private final Integer state;
+    private Integer state;
 
     SexEnum(Integer state) {
         this.state = state;

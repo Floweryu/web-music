@@ -16,31 +16,23 @@ public class SingerServiceUtil {
         Integer sex = singerReq.getSex();
         String pic = singerReq.getPic();
         Date birth = singerReq.getBirth();
-        String location = singerReq.getLocation();
-        String introduction = singerReq.getIntroduction();
+        String location = singerReq.getLocation().trim();
+        String introduction = singerReq.getIntroduction().trim();
 
         Singer singer = new Singer();
         if (id != null) {
             singer.setId(id);
         }
-        if (name != null) {
-            singer.setName(name.trim());
-        }
-        if (sex != null) {
-            singer.setSex(sex);
-        }
-        if (pic != null) {
-            singer.setPic(pic.trim());
-        }
-        if (birth != null) {
-            singer.setBirth(birth);
-        }
-        if (location != null) {
-            singer.setLocation(location.trim());
-        }
-        if (introduction != null) {
-            singer.setIntroduction(introduction.trim());
-        }
+        singer.setName(name);
+        singer.setSex(sex);
+        singer.setPic(pic);
+        singer.setBirth(birth);
+        singer.setLocation(location);
+        singer.setIntroduction(introduction);
+
+        long timeNow = System.currentTimeMillis();
+        singer.setCreateTime(timeNow);
+        singer.setUpdateTime(timeNow);
         return singer;
     }
 }
