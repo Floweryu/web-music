@@ -17,9 +17,10 @@ public class GlobalCorsConfig {
     private CorsConfiguration buildConfig() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowCredentials(true);    // 是否发送cookie信息
-        corsConfiguration.addAllowedOrigin("*");    // 允许任何域名访问
+        corsConfiguration.addAllowedOriginPattern("*");    // 允许任何域名访问
         corsConfiguration.addAllowedHeader("*");    // 允许任何请求头访问
         corsConfiguration.addAllowedMethod("*");    // 允许任何请求方法(get, post等)
+        corsConfiguration.addExposedHeader("*");    // 暴露头部信息
         return corsConfiguration;
     }
 
