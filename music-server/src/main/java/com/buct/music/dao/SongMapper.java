@@ -33,5 +33,5 @@ public interface SongMapper {
     List<Song> selectByName(String name);
 
     // 根据歌手名字查询
-    List<Song> selectBySinger(String name);
+    List<Song> selectBySinger(Long singerId);
 }
