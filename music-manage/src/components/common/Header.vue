@@ -15,7 +15,7 @@ export default {
 <style scoped>
 .header {
   position: sticky;
-  top: -3px;
+  top: -1px;
   display: flex;
   align-items: center;
   justify-content: space-between;
