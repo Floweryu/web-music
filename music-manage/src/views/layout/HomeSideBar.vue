@@ -51,7 +51,7 @@ const menuList = [
   },
   {
     title: '歌曲管理',
-    index: '/dashboard/song',
+    index: '/dashboard/songs',
     icon: 'el-icon-s-platform'
   }
 ]
