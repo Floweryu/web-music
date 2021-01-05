@@ -25,7 +25,7 @@ const routes = [
       {
         path: 'user',
         component: UserManage,
-        meta: { title: '用户管理'}
+        meta: { title: '用户管理' }
       }
     ]
   }
