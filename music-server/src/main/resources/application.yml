@@ -6,6 +6,9 @@ spring:
     name: music
   profiles:
     active: local
+  servlet:
+    multipart:
+      max-file-size: 2MB
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
