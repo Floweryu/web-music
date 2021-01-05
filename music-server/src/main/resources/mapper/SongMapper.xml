@@ -22,7 +22,7 @@
             <if test="id != null">
                 id,
             </if>
-            <if test="singerName != null">
+            <if test="singerId != null">
                 singer_id,
             </if>
             <if test="name != null">
@@ -48,8 +48,8 @@
             <if test="id != null">
                 #{id},
             </if>
-            <if test="singerName != null">
-                #{singerName}
+            <if test="singerId != null">
+                #{singerId},
             </if>
             <if test="name != null">
                 #{name},
@@ -79,7 +79,7 @@
                 name = #{name},
             </if>
             <if test="singerId != null">
-                sex = #{singerId},
+                singer_id = #{singerId},
             </if>
             <if test="pic != null">
                 pic = #{pic},
@@ -125,10 +125,10 @@
         where name like #{name}
     </select>
 
-    <select id="selectBySinger" resultMap="BaseResultMap" parameterType="java.lang.String">
+    <select id="selectBySinger" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select
         <include refid="Base_Column_List" />
-        from song, singer
-        where song.singer_id = singer.id and singer.name like #{name}
+        from song
+        where singer_id = #{singerId}
     </select>
 </mapper>

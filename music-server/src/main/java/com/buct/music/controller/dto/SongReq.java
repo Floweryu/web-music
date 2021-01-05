@@ -14,6 +14,9 @@ public class SongReq implements Serializable {
     // 自增主键
     private Long id;
 
+    // 对应歌手id
+    private Long singerId;
+
     // 对应歌手姓名
     private String singerName;
 
