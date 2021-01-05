@@ -6,8 +6,17 @@ const user = {
   addUser(data) {
     return axios.post(`${host.apiHost}/admin/user`, data)
   },
+  //查询所有用户
   getAllUsers() {
     return axios.get(`${host.apiHost}/admin/users`)
+  },
+  //删除对应id用户
+  deletUser(params) {
+    return axios.delete(`${host.apiHost}/admin/user`, params)
+  },
+  //更新用户
+  updateUser(data) {
+    return axios.put(`${host.apiHost}/admin/user`, {}, data)
   }
 }
 
