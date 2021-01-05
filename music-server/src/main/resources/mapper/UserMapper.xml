@@ -163,7 +163,7 @@
         where username like #{username}
     </select>
 
-    <select id="verifyPassword" parameterType="java.util.HashMap" resultMap = "java.lang.Integer">
+    <select id="verifyPassword" parameterType="java.util.HashMap" resultType="java.lang.Integer">
         select count(*)
         from user
         where username = #{uesrname} and password = #{password}
