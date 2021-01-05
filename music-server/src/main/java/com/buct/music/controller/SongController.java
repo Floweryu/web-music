@@ -26,6 +26,11 @@ public class SongController {
         this.songService = songService;
     }
 
+    /**
+     * 添加一首歌
+     * @param songReq 前端传递歌曲参数
+     * @return Result<CodeMsg>
+     */
     @PostMapping("/song")
     public Result<CodeMsg> addSong(@RequestBody SongReq songReq) {
         try {
@@ -36,11 +41,16 @@ public class SongController {
             else
                 return Result.error(CodeMsg.FAILURE);
         } catch (Throwable throwable) {
-            log.error("There is something error: {}", throwable.getMessage());
+            log.error("There is som+ething error: {}", throwable.getMessage());
             return Result.error(CodeMsg.SERVER_ERROR);
         }
     }
 
+    /**
+     * 修改特定歌曲的信息
+     * @param songReq 前端传来的歌曲参数
+     * @return Result<CodeMsg>
+     */
     @PutMapping("/song")
     public Result<CodeMsg> updateSong(@RequestBody SongReq songReq) {
         try {
@@ -56,6 +66,11 @@ public class SongController {
         }
     }
 
+    /**
+     * 根据id删除歌曲
+     * @param id 前端传入的歌曲id
+     * @return Result<Msg>
+     */
     @DeleteMapping("/song")
     public Result<CodeMsg> deleteSong(@RequestParam Long id) {
         if (id <= 0) {
@@ -74,6 +89,11 @@ public class SongController {
         }
     }
 
+    /**
+     * 根据id查找歌曲
+     * @param id 歌曲id
+     * @return Result<Song>
+     */
     @GetMapping("/song")
     public Result<Song> getByPrimaryKey(@RequestParam Long id) {
         if (id <= 0) {
@@ -89,6 +109,10 @@ public class SongController {
         }
     }
 
+    /**
+     * 查找所有歌曲
+     * @return Result<List<Song>>
+     */
     @GetMapping("/songs")
     public Result<List<Song>> getAllSongs() {
         try {
@@ -101,6 +125,11 @@ public class SongController {
         }
     }
 
+    /**
+     * 根据歌曲名字查找歌曲
+     * @param name 前端传入的歌曲名字
+     * @return Result<List<Song>>
+     */
     @GetMapping("/songs/name")
     public Result<List<Song>> getSongByName(@RequestParam String name) {
         try {
@@ -113,7 +142,12 @@ public class SongController {
         }
     }
 
-    @GetMapping("/songs/singer_id")
+    /**
+     * 根据歌手名字查找对应歌曲
+     * @param name 前端传入的歌曲名字
+     * @return Result<List<Song>>
+     */
+    @GetMapping("/songs/singer_name")
     public Result<List<Song>> getSongBySinger(@RequestParam String name) {
         try {
             List<Song> songList = songService.selectBySinger(name);
