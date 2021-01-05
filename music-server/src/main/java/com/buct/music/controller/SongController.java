@@ -31,7 +31,7 @@ public class SongController {
      * @param songReq 前端传递歌曲参数
      * @return Result<CodeMsg>
      */
-    @PostMapping("/song")
+    @PostMapping("/songs")
     public Result<CodeMsg> addSong(@RequestBody SongReq songReq) {
         try {
             boolean flag = songService.insert(songReq);
@@ -51,7 +51,7 @@ public class SongController {
      * @param songReq 前端传来的歌曲参数
      * @return Result<CodeMsg>
      */
-    @PutMapping("/song")
+    @PutMapping("/songs")
     public Result<CodeMsg> updateSong(@RequestBody SongReq songReq) {
         try {
             boolean flag = songService.update(songReq);
@@ -71,7 +71,7 @@ public class SongController {
      * @param id 前端传入的歌曲id
      * @return Result<Msg>
      */
-    @DeleteMapping("/song")
+    @DeleteMapping("/songs")
     public Result<CodeMsg> deleteSong(@RequestParam Long id) {
         if (id <= 0) {
             return Result.error(400, "id should > 0 !");
