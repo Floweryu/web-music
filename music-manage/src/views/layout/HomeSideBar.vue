@@ -43,6 +43,15 @@ const menuList = [
     title: '歌手管理',
     index: '/dashboard/singer',
     icon: 'el-icon-s-platform'
+  },
+  {
+    title: '用户管理',
+    index: '/dashboard/user',
+  },
+  {
+    title: '歌曲管理',
+    index: '/dashboard/song',
+    icon: 'el-icon-s-platform'
   }
 ]
 export default {
