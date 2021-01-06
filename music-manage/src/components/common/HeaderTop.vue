@@ -31,7 +31,9 @@ export default {
     }
   },
   methods: {
-    addSinger() {},
+    addSinger() {
+      this.$emit('add-singer', true)
+    },
     searchData() {
       this.$emit('input-data', this.input)
     }

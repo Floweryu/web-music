@@ -1,6 +1,6 @@
 <template>
   <div class="singer">
-    <header-top />
+    <header-top @input-data="searchData" @add-singer="addSinger" />
     <el-card class="body">
       <el-table
         :data="tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)"
@@ -30,7 +30,7 @@
         <el-table-column label="操作" min-width="10%" align="center">
           <template slot-scope="scope">
             <el-button
-              @click="edit(scope.$index, scope.row)"
+              @click="editSinger(scope.$index, scope.row)"
               size="mini"
               type="primary"
               icon="el-icon-plus"
@@ -38,7 +38,7 @@
               >编辑
             </el-button>
             <el-button
-              @click="delete (scope.$index, scope.row)"
+              @click="deleteSinger(scope.$index, scope.row)"
               size="mini"
               type="danger"
               icon="el-icon-plus"
@@ -56,11 +56,19 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
     />
+    <singer-dialog
+      ref="child"
+      :is-edit-button="isEditButton"
+      :edit-value="editValue"
+      :dialog-visible="dialogFormVisible"
+      @dialog-cancel="dialogCancel"
+    />
   </div>
 </template>
 
 <script>
 import HeaderTop from '@/components/common/HeaderTop'
+import SingerDialog from '@/components/dialog/SingerDialog'
 
 import { formatDate } from '@/utils/index'
 import { pageSeparate } from '@/utils/mixin'
@@ -68,18 +76,23 @@ import { pageSeparate } from '@/utils/mixin'
 export default {
   name: 'SingerManage',
   components: {
-    HeaderTop
+    HeaderTop,
+    SingerDialog
   },
   mixins: [pageSeparate],
   data() {
     return {
-      tableData: []
+      tableData: [],
+      dialogFormVisible: false,
+      isEditButton: false,
+      editValue: {}
     }
   },
   created() {
     this.getAllSingers()
   },
   methods: {
+    // 获取所有歌手
     getAllSingers() {
       this.$http.singer.getAllSinger().then(res => {
         if (res.code === 0 && res.data) {
@@ -105,6 +118,24 @@ export default {
         }
       })
     },
+    // 模糊查询歌手
+    searchData(val) {
+      let query = {
+        params: {
+          name: val
+        }
+      }
+      this.$http.singer.getSingerByName(query).then(res => {
+        if (res.code === 0 && res.data) {
+          this.tableData = res.data
+        }
+      })
+    },
+    // 添加歌手
+    addSinger(val) {
+      this.isEditButton = false
+      this.dialogFormVisible = val
+    },
     // 图片上传地址
     uploadUrl(id) {
       return `${process.env.VUE_APP_BASE_URL}/admin/singer/updatePic?id=${id}`
@@ -125,7 +156,7 @@ export default {
       return true
     },
     // 上传图片成功后
-    handleImgSuccess(res, file) {
+    handleImgSuccess(res) {
       if (res.code === 0) {
         this.getAllSingers()
         this.$notify({
@@ -137,11 +168,53 @@ export default {
           message: '图片上传失败'
         })
       }
-      console.log('res', res)
-      console.log('file', file)
     },
-    edit() {},
-    delete() {}
+    // 接收弹窗的取消事件
+    dialogCancel() {
+      this.dialogFormVisible = false
+    },
+    // 编辑歌手
+    editSinger(index, row) {
+      this.isEditButton = true
+      this.dialogFormVisible = true
+      this.editValue = row
+    },
+    // 删除歌手信息
+    deleteSinger(index, row) {
+      this.$confirm('此操作将永久删除该歌手, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          let query = {
+            params: {
+              id: row.id
+            }
+          }
+          this.$http.singer
+            .deleteSinger(query)
+            .then(res => {
+              if (res.code === 0) {
+                this.$notify({
+                  message: '删除歌手成功',
+                  type: 'success'
+                })
+                this.getAllSingers()
+              }
+            })
+            .catch(() => {
+              this.$notify.error({
+                message: '删除歌手失败'
+              })
+            })
+        })
+        .catch(() => {
+          this.$notify.error({
+            message: '取消删除操作'
+          })
+        })
+    }
   }
 }
 </script>
