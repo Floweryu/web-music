@@ -8,7 +8,7 @@ const singer = {
   },
   // 更新歌手
   updateSinger(data) {
-    return axios.put(`${host.apiHost}/admin/singer`, {}, data)
+    return axios.put(`${host.apiHost}/admin/singer`, data)
   },
   // 删除歌手
   deleteSinger(params) {
