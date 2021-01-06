@@ -62,6 +62,7 @@ export default {
       if (res.code === 0 && res.data) {
         let data = res.data
         data.forEach(item => {
+          item.singerName = 'Unknown'
           this.$http.singer
             .getSingerById({
               params: {
