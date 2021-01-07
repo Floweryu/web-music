@@ -272,14 +272,14 @@ export default {
       this.centerDialogVisible2 = false
     },
     //按照username查找用户
-    searchUser(){
+    searchUser() {
       let query = {
-        params : {
-          username : this.registerForm.username
+        params: {
+          username: this.registerForm.username
         }
       }
       this.$http.user.getUserByName(query).then(res => {
-        if(res.code === 0 && res.data){
+        if (res.code === 0 && res.data) {
           this.tableData = res.data
         }
       })
