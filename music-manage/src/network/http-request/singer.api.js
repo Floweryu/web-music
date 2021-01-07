@@ -11,8 +11,8 @@ const singer = {
     return axios.put(`${host.apiHost}/admin/singer`, data)
   },
   // 删除歌手
-  deleteSinger(params) {
-    return axios.delete(`${host.apiHost}/admin/singer`, params)
+  deleteSinger(data) {
+    return axios.delete(`${host.apiHost}/admin/singer`, { data })
   },
   // 根据主键查询歌手
   getSingerById(params) {
