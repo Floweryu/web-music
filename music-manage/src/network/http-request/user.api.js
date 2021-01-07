@@ -11,12 +11,17 @@ const user = {
     return axios.get(`${host.apiHost}/admin/users`)
   },
   //删除对应id用户
-  deletUser(params) {
+  deleteUser(params) {
+    // console.log(params);
     return axios.delete(`${host.apiHost}/admin/user`, params)
   },
   //更新用户
   updateUser(data) {
-    return axios.put(`${host.apiHost}/admin/user`, {}, data)
+    return axios.put(`${host.apiHost}/admin/user`, data)
+  },
+  //根据username查用户
+  getUserByName(params) {
+    return axios.get(`${host.apiHost}/admin/users/username`, params)
   }
 }
 
