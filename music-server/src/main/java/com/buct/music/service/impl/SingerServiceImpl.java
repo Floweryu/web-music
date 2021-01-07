@@ -43,8 +43,8 @@ public class SingerServiceImpl implements SingerService {
 
     // 删除歌手
     @Override
-    public boolean delete(Long id) {
-        return singerMapper.delete(id) > 0;
+    public boolean delete(List<Long> idList) {
+        return singerMapper.delete(idList) > 0;
     }
 
     // 根据主键查询整个对象

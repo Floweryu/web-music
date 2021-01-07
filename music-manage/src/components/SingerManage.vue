@@ -1,14 +1,20 @@
+<!--
+ * @Author: Zhang JunFeng
+ * @Date: 2021-01-03
+ -->
 <template>
   <div class="singer">
-    <header-top @input-data="searchData" @add-singer="addSinger" />
+    <header-top @input-data="searchData" @add-singer="addSinger" @multiple-delete="multipleDelete" />
     <el-card class="body">
       <el-table
         :data="tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)"
         style="width: 100%"
         size="small"
+        @selection-change="handleSelectionChange"
         border
         stripe
       >
+        <el-table-column type="selection" width="55"> </el-table-column>
         <el-table-column prop="pic" label="图片" min-width="5%" align="center">
           <template slot-scope="scope">
             <el-upload
@@ -33,7 +39,7 @@
               @click="editSinger(scope.$index, scope.row)"
               size="mini"
               type="primary"
-              icon="el-icon-plus"
+              icon="el-icon-edit"
               style="width: 50px; padding: 5px 0;"
               >编辑
             </el-button>
@@ -41,7 +47,7 @@
               @click="deleteSinger(scope.$index, scope.row)"
               size="mini"
               type="danger"
-              icon="el-icon-plus"
+              icon="el-icon-delete"
               style="width: 50px; padding: 5px 0;"
               >删除</el-button
             >
@@ -85,7 +91,8 @@ export default {
       tableData: [],
       dialogFormVisible: false,
       isEditButton: false,
-      editValue: {}
+      editValue: {},
+      selectRows: []
     }
   },
   created() {
@@ -135,6 +142,7 @@ export default {
     addSinger(val) {
       this.isEditButton = false
       this.dialogFormVisible = val
+      this.editValue = {}
     },
     // 图片上传地址
     uploadUrl(id) {
@@ -179,37 +187,63 @@ export default {
       this.dialogFormVisible = true
       this.editValue = row
     },
-    // 删除歌手信息
-    deleteSinger(index, row) {
-      this.$confirm('此操作将永久删除该歌手, 是否继续?', '提示', {
+    // 存储选择行信息
+    handleSelectionChange(rows) {
+      this.selectRows = rows
+    },
+    // 删除歌手接口
+    deleteSingerApi(data) {
+      this.$http.singer
+        .deleteSinger(JSON.stringify(data))
+        .then(res => {
+          if (res.code === 0) {
+            this.$notify({
+              message: '删除歌手成功',
+              type: 'success'
+            })
+            this.getAllSingers()
+          }
+        })
+        .catch(() => {
+          this.$notify.error({
+            message: '删除歌手失败'
+          })
+        })
+    },
+    // 批量删除
+    async multipleDelete() {
+      this.$confirm('此操作将永久删除歌手, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       })
-        .then(() => {
-          let query = {
-            params: {
-              id: row.id
-            }
-          }
-          this.$http.singer
-            .deleteSinger(query)
-            .then(res => {
-              if (res.code === 0) {
-                this.$notify({
-                  message: '删除歌手成功',
-                  type: 'success'
-                })
-                this.getAllSingers()
-              }
-            })
-            .catch(() => {
-              this.$notify.error({
-                message: '删除歌手失败'
-              })
-            })
+        .then(async () => {
+          let data = []
+          this.selectRows.forEach(item => {
+            data.push(item.id)
+          })
+          await this.deleteSingerApi(data)
         })
         .catch(() => {
+          this.$notify.error({
+            message: '取消删除操作'
+          })
+        })
+    },
+    // 删除歌手信息
+    async deleteSinger(index, row) {
+      this.$confirm('此操作将永久删除歌手, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(async () => {
+          let data = []
+          data.push(row.id)
+          await this.deleteSingerApi(data)
+        })
+        .catch(err => {
+          console.log(err)
           this.$notify.error({
             message: '取消删除操作'
           })

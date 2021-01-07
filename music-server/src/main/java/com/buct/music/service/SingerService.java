@@ -17,7 +17,7 @@ public interface SingerService {
     boolean update(SingerReq singerReq);
 
     // 删除歌手
-    boolean delete(Long id);
+    boolean delete(List<Long> idList);
 
     // 根据主键查询整个对象
     Singer selectByPrimaryKey(Long id);

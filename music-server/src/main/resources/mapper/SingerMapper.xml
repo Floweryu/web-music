@@ -110,9 +110,11 @@
         where id = #{id}
     </update>
     
-    <delete id="delete" parameterType="java.lang.Long">
-        delete from singer
-        where id = #{id}
+    <delete id="delete" parameterType="java.util.List">
+        delete from singer where id in
+        <foreach collection="list" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
     </delete>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">

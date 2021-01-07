@@ -73,17 +73,17 @@ public class SingerController {
 
     /**
      * 删除歌手信息
-     * @param id    要删除的歌手id
+     * @param idList    要删除的歌手id
      * @return Result<CodeMsg>
      */
     @DeleteMapping("/singer")
-    public Result<CodeMsg> deleteSinger(@RequestParam Long id) {
-        if (id <= 0) {
-            return Result.error(400, "id should > 0 !");
+    public Result<CodeMsg> deleteSinger(@RequestBody List<Long> idList) {
+        if (idList.isEmpty()) {
+            return Result.error(400, "idList should not be null !");
         }
         try {
-            boolean flag = singerService.delete(id);
-            log.info("删除歌手id: {}", id);
+            boolean flag = singerService.delete(idList);
+            log.info("删除歌手的idList: {}", idList);
             if (flag) {
                 return Result.success(CodeMsg.SUCCESS);
             }else {
