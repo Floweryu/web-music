@@ -270,8 +270,20 @@ export default {
           console.error(err)
         })
       this.centerDialogVisible2 = false
-    }
+    },
     //按照username查找用户
+    searchUser(){
+      let query = {
+        params : {
+          username : this.registerForm.username
+        }
+      }
+      this.$http.user.getUserByName(query).then(res => {
+        if(res.code === 0 && res.data){
+          this.tableData = res.data
+        }
+      })
+    }
   }
 }
 </script>
