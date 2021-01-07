@@ -1,3 +1,7 @@
+<!--
+ * @Author: Zhang JunFeng
+ * @Date: 2021-01-06
+ -->
 <template>
   <Header>
     <el-button slot="left" size="mini" type="primary" @click="addSinger" round>添加歌手</el-button>

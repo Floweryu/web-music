@@ -1,3 +1,7 @@
+<!--
+ * @Author: Zhang JunFeng
+ * @Date: 2021-01-06
+ -->
 <template>
   <el-dialog :title="isEditButton ? '编辑歌手信息' : '新增歌手'" :visible="dialogVisible" :before-close="cancel">
     <el-card>

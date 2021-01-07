@@ -1,3 +1,7 @@
+<!--
+ * @Author: Zhang JunFeng
+ * @Date: 2021-01-03
+ -->
 <template>
   <div class="singer">
     <header-top @input-data="searchData" @add-singer="addSinger" />

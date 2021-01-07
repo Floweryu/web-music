@@ -1,4 +1,7 @@
-/* eslint-disable prettier/prettier */
+<!--
+ * @Author: Zhang JunFeng
+ * @Date: 2021-01-03
+ -->
 <template>
   <div id="home-sidebar">
     <el-menu
