@@ -1,6 +1,10 @@
+<!--
+ * @Author: Zhang JunFeng
+ * @Date: 2021-01-06
+ -->
 <template>
   <el-dialog :title="isEditButton ? '编辑歌手信息' : '新增歌手'" :visible="dialogVisible" :before-close="cancel">
-    <el-card>
+    <el-card shadow="hover">
       <el-row type="flex" align="middle" class="row-bg">
         <el-col :span="4" :offset="3"><label>姓名</label></el-col>
         <el-col :span="10">
@@ -147,7 +151,7 @@ export default {
 }
 .row-bg {
   padding: 8px 8px;
-  background-color: #f9fafc;
+  background-color: #fbfbfb85;
   border-radius: 4px;
 }
 </style>

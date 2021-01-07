@@ -20,7 +20,7 @@ public interface SingerMapper {
     int update(Singer singer);
 
     // 删除歌手
-    int delete(Long id);
+    int delete(List<Long> idList);
 
     // 根据主键查询整个对象
     Singer selectByPrimaryKey(Long id);

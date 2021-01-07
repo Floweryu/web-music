@@ -1,3 +1,6 @@
+// @Author: Zhang JunFeng
+// @Date: 2021-01-06
+
 // 时间格式转换
 export function formatDate(date, fmt) {
   // 获取年份
