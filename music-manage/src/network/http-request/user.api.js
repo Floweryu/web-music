@@ -11,11 +11,11 @@ const user = {
     return axios.get(`${host.apiHost}/admin/users`)
   },
   //删除对应id用户
-  deleteUser(params) {
+  deletUser(params) {
     return axios.delete(`${host.apiHost}/admin/user`, params)
   },
   //更新用户
-  updatUser(data) {
+  updateUser(data) {
     return axios.put(`${host.apiHost}/admin/user`, {}, data)
   }
 }
