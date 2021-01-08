@@ -10,6 +10,30 @@
       <i v-else class="el-icon-s-fold"></i>
     </div>
     <div class="logo">{{ '后台管理 ' }}</div>
+    <div>
+      <div class="header-right">
+        <div class="user-avator">
+          <img src="../../assets/img/user.jpg" />
+        </div>
+        <el-dropdown class="user-name" trigger="click" @command="handleCommand">
+          <span class="el-dropdown-link">
+            {{ userName }}
+            <i class="el-icon-caret-bottom"></i>
+          </span>
+
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="logout">
+              退出登录
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+        <div class="btn-fullscreen" @click="handleFullScreen">
+          <el-tooltip :content="fullscreen ? '取消全屏' : '全屏'" placement="bottom">
+            <i class="el-icon-rank"></i>
+          </el-tooltip>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -19,15 +43,56 @@ export default {
   name: 'HomeHeader',
   data() {
     return {
-      collapse: false
+      collapse: false,
+      fullscreen: false
     }
   },
   created() {},
+  computed: {
+    userName() {
+      return localStorage.getItem('username')
+    }
+  },
   methods: {
     // 发送 collpse 到 兄弟组件home-sidebar 和父组件 home
     collapseChange() {
       this.collapse = !this.collapse
       bus.$emit('collapse', this.collapse)
+    },
+    handleFullScreen() {
+      //全屏功能
+      if (this.fullscreen) {
+        if (document.exitFullscreen) {
+          document.exitFullscreen()
+        } else if (document.webkitCancelFullScreen) {
+          //safari, chrome
+          document.webkitCancelFullScreen()
+        } else if (document.mozCancelFullScreen) {
+          //firefox
+          document.mozCancelFullScreen()
+        } else if (document.msExitFullScreen) {
+          //ie
+          document.msExitFullScreen()
+        }
+      } else {
+        let element = document.documentElement
+        if (element.requestFullscreen) {
+          element.requestFullscreen()
+        } else if (element.webkitRequestFullScreen) {
+          element.webkitRequestFullScreen()
+        } else if (element.mozRequestFullScreen) {
+          element.mozRequestFullScreen()
+        } else if (element.msRequestFullScreen) {
+          element.msRequestFullScreen()
+        }
+      }
+      this.fullscreen = !this.fullscreen
+    },
+    handleCommand(command) {
+      if (command == 'logout') {
+        localStorage.removeItem('username')
+        this.$router.push('/')
+      }
     }
   }
 }
@@ -53,5 +118,35 @@ export default {
 .logo {
   float: left;
   line-height: 50px;
+}
+.header-right {
+  float: right;
+  padding-right: 20px;
+  display: flex;
+  height: 50px;
+  align-items: center;
+}
+.btn-fullscreen {
+  margin-right: 5px;
+  font-size: 24px;
+  transform: rotate(45deg);
+}
+.user-avator {
+  float: right;
+  margin-left: 20px;
+}
+.user-avator img {
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.user-name {
+  margin-left: 10px;
+  margin-right: 20px;
+}
+.el-dropdown-link {
+  color: white;
+  cursor: pointer;
 }
 </style>

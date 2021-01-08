@@ -2,7 +2,11 @@
   <div class="table">
     <div class="container">
       <div class="handle-box">
-        <el-button type="primary" size="mini" @click="centerDialogVisible = true"> 添加用户 </el-button>
+        <el-button type="primary" size="mini" @click="addUserDialog"> 添加用户 </el-button>
+        <div class="search">
+          <el-input class="searchInput" prefix-icon="el-icon-search" placeholder="请输入用户名" v-model="registerForm.username"></el-input>
+          <el-button type="primary" size="mini" icon="el-icon-search" @click="searchUser">搜索</el-button>
+        </div>
       </div>
     </div>
     <el-dialog title="添加用户" :visible.sync="centerDialogVisible" width="400px" center>
@@ -49,27 +53,18 @@
         stripe
       >
         <el-table-column prop="pic" label="图片" min-width="10%" align="center" />
-        <el-table-column prop="username" label="姓名" min-width="10%" align="center" />
+        <el-table-column prop="username" label="用户名" min-width="10%" align="center" />
+        <el-table-column prop="password" label="密码" min-width="10%" align="center" />
         <el-table-column prop="sex" label="性别" min-width="5%" align="center" />
         <el-table-column prop="birth" label="生日" min-width="10%" align="center" />
-        <el-table-column prop="location" label="地区" min-width="10%" align="center" />
-        <el-table-column prop="introduction" label="简介" min-width="20%" align="center" />
+        <el-table-column prop="location" label="地区" min-width="5%" align="center" />
+        <el-table-column prop="introduction" label="简介" min-width="10%" align="center" />
         <el-table-column label="操作" min-width="10%" align="center">
           <template slot-scope="scope">
-            <el-button
-              @click="edit(scope.$index, scope.row)"
-              size="mini"
-              type="primary"
-              icon="el-icon-plus"
-              style="width: 50px; padding: 7px 0"
+            <el-button @click="editUserDialog(scope.row)" size="mini" type="primary" icon="el-icon-plus" style="width: 50px; padding: 7px 0"
               >编辑
             </el-button>
-            <el-button
-              @click="delete (scope.$index, scope.row)"
-              size="mini"
-              type="danger"
-              icon="el-icon-plus"
-              style="width: 50px; padding: 7px 0"
+            <el-button @click="deleteUser(scope.row)" size="mini" type="danger" icon="el-icon-plus" style="width: 50px; padding: 7px 0"
               >删除</el-button
             >
           </template>
@@ -95,6 +90,7 @@ export default {
   data() {
     return {
       centerDialogVisible: false,
+      centerDialogVisible2: false,
       tableData: [],
       registerForm: {
         //添加框
@@ -160,5 +156,14 @@ export default {
 <style scoped>
 .handle-box {
   margin-bottom: 20;
+  display: flex;
+  justify-content: space-between;
+}
+.searchInput {
+  /* width: 100px; */
+  margin-right: 20px;
+}
+.search {
+  display: flex;
 }
 </style>

@@ -7,13 +7,19 @@ const SingerManage = () => import('@/components/SingerManage')
 const UserManage = () => import('@/components/UserManage')
 
 const SongManage = () => import('@/components/SongManage')
+const Login = () => import('@/components/Login')
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    redirect: '/dashboard'
+    redirect: '/login'
+  },
+  {
+    path: '/login',
+    component: Login,
+    meta: { title: '登录' }
   },
   {
     path: '/dashboard',
