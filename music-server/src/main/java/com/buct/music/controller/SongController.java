@@ -158,4 +158,20 @@ public class SongController {
             return Result.error(CodeMsg.SERVER_ERROR);
         }
     }
+
+    /**
+     * 查找包含歌手名的所有歌曲
+     * @return Result<List<SongReq>>
+     */
+    @GetMapping("/songs/songs_with_singer_name")
+    public Result<List<SongReq>> getAllSongsWithSinger() {
+        try {
+            List<SongReq> songList = songService.getAllSongsWithSinger();
+            log.info("所有歌曲: {}", songList);
+            return Result.success(songList);
+        } catch (Throwable throwable) {
+            log.error("There is something error: {}", throwable.getMessage());
+            return Result.error(CodeMsg.SERVER_ERROR);
+        }
+    }
 }

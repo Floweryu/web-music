@@ -58,27 +58,10 @@ export default {
     }
   },
   created() {
-    this.$http.songs.getAllSongs().then(res => {
+    this.$http.songs.getAllSongsWithSingerName().then(res => {
       if (res.code === 0 && res.data) {
-        let data = res.data
-        data.forEach(item => {
-          item.singerName = 'Unknown'
-          this.$http.singer
-            .getSingerById({
-              params: {
-                id: item.singerId
-              }
-            })
-            .then(res => {
-              let singerName = res.data.name
-              Object.defineProperty(item, 'singerName', {
-                get() {
-                  return singerName
-                }
-              })
-            })
-        })
-        this.tableData = data
+        console.log(res.data)
+        this.tableData = res.data
       }
       console.log(this.tableData)
     })

@@ -80,4 +80,10 @@ public class SongServiceImpl implements SongService {
         Long tempId = singerServiceImpl.getSingerId(likeName);
         return songMapper.selectBySinger(tempId);
     }
+
+    // 返回带歌手姓名的歌曲数据
+    @Override
+    public List<SongReq> getAllSongsWithSinger() {
+        return songMapper.selectAllSongsWithSingerName();
+    }
 }

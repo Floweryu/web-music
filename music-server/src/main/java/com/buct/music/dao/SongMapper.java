@@ -1,5 +1,6 @@
 package com.buct.music.dao;
 
+import com.buct.music.controller.dto.SongReq;
 import com.buct.music.domin.Song;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -34,4 +35,7 @@ public interface SongMapper {
 
     // 根据歌手名字查询
     List<Song> selectBySinger(Long singerId);
+
+    // 查询所有歌曲，并包含对应歌手名字
+    List<SongReq> selectAllSongsWithSingerName();
 }

@@ -30,4 +30,7 @@ public interface SongService {
 
     // 根据歌手名字模糊查询
     List<Song> selectBySinger(String name);
+
+    // 返回带歌手名字的歌曲数据
+    List<SongReq> getAllSongsWithSinger();
 }

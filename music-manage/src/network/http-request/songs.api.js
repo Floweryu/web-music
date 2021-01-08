@@ -22,6 +22,10 @@ const songs = {
   getAllSongs() {
     return axios.get(`${host.apiHost}/admin/songs`)
   },
+  // 获取所有带歌手名字的歌曲
+  getAllSongsWithSingerName() {
+    return axios.get(`${host.apiHost}/admin/songs/songs_with_singer_name`)
+  },
   // 根据歌名查询歌曲
   getSongsByName(params) {
     return axios.get(`${host.apiHost}/admin/songs/name`, params)
