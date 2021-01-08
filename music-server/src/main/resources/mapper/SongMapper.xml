@@ -99,7 +99,7 @@
                 pic = #{pic},
             </if>
             <if test="url != null">
-                location = #{url},
+                url = #{url},
             </if>
             <if test="introduction != null">
                 introduction = #{introduction},
