@@ -43,7 +43,7 @@ export default {
       // }
       this.$http.admin.verifyPassword(JSON.stringify(this.ruleForm)).then(res => {
         if (res.code === 0) {
-          //   localStorage.setItem('name', this.ruleForm.username)
+          localStorage.setItem('username', this.ruleForm.username)
           this.$router.push('/dashboard')
           this.notify('登陆成功', 'success')
         } else {
