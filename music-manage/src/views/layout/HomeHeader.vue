@@ -9,11 +9,11 @@
       <i v-if="!collapse" class="el-icon-s-unfold"></i>
       <i v-else class="el-icon-s-fold"></i>
     </div>
-    <div class="logo">{{ '后台管理 ' }}</div>
+    <div class="logo">{{ '音乐后台管理 ' }}</div>
     <div>
       <div class="header-right">
         <div class="user-avator">
-          <img src="../../assets/img/user.jpg" />
+          <img src="~/assets/img/user.jpg" />
         </div>
         <el-dropdown class="user-name" trigger="click" @command="handleCommand">
           <span class="el-dropdown-link">
@@ -137,9 +137,10 @@ export default {
 }
 .user-avator img {
   display: block;
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
+  margin-right: 5px;
 }
 .user-name {
   margin-left: 10px;

@@ -1,6 +1,3 @@
-// @Author: Zhang JunFeng
-// @Date: 2021-01-06
-
 import PageSeparate from '@/components/common/PageList'
 
 // 分页组件混入
@@ -23,6 +20,18 @@ export const pageSeparate = {
     },
     handleCurrentChange(val) {
       this.currentPage = val
+    }
+  }
+}
+
+export const notify = {
+  methods: {
+    //提示信息
+    notify(title, type) {
+      this.$notify({
+        title: title,
+        type: type
+      })
     }
   }
 }

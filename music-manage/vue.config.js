@@ -29,7 +29,6 @@ if (env === 'production') {
   util.publicPath = ''
 }
 
-
 module.exports = {
   configureWebpack: {
     performance: {
@@ -42,7 +41,7 @@ module.exports = {
         views: '@/views',
         network: '@/network',
         utils: '@/utils',
-        store: '@/store',
+        store: '@/store'
       }
     }
   },
