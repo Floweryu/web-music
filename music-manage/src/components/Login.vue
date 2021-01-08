@@ -1,7 +1,7 @@
 <template>
   <div class="login-wrap">
     <!-- <img src="../assets/img/background.jpg"> -->
-    <div class="ms-title">music 后台管理登录</div>
+    <div class="ms-title">web-music 后台管理登录</div>
     <div class="ms-login">
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
         <el-form-item prop="username">
@@ -19,9 +19,9 @@
 </template>
 
 <script>
-import mixin from '../utils/mixins/index'
+import { notify } from '@/utils/mixin'
 export default {
-  mixins: [mixin],
+  mixins: [notify],
   data: function() {
     return {
       ruleForm: {
@@ -70,9 +70,9 @@ export default {
   position: absolute;
   top: 50%;
   width: 100%;
-  margin-top: -230px;
+  margin-top: -266px;
   text-align: center;
-  font-size: 30px;
+  font-size: 40px;
   font-weight: 600;
   color: white;
 }
