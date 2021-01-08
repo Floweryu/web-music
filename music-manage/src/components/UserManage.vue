@@ -145,11 +145,6 @@ export default {
     this.listAll()
   },
   methods: {
-    //添加用户按钮
-    addUserDialog() {
-      this.registerForm = {}
-      this.centerDialogVisible = true
-    },
     //添加用户
     addUser() {
       this.$http.user
@@ -188,102 +183,8 @@ export default {
         }
       })
     },
-    //编辑用户按钮
-    editUserDialog(params) {
-      this.centerDialogVisible2 = true
-      this.registerForm = params
-      let sex = this.registerForm.sex
-      if (sex === '男') {
-        this.registerForm.sex = 1
-      } else {
-        this.registerForm.sex = 0
-      }
-      // this.registerForm.username = params.username
-      // this.registerForm.password = params.password
-      // let sex = params.sex
-      // if(sex === '男'){
-      //   this.registerForm.sex = 1
-      // }else {
-      //   this.registerForm.sex = 0
-      // }
-      // this.registerForm.birth = params.birth
-      // this.registerForm.location = params.location
-      // this.registerForm.introduction = params.introduction
-      // this.registerForm.phoneNumber = params.phoneNumber
-      // this.registerForm.email = params.email
-    },
-    //删除用户
-    deleteUser(params) {
-      // console.log(params)
-      let query = {
-        params: {
-          id: params.id
-        }
-      }
-      // let id = params.id
-      // console.log(id)
-      this.$http.user
-        .deleteUser(query)
-        .then(res => {
-          // console.log('获取' + res.code)
-          if (res.code === 0) {
-            this.$notify({
-              message: '删除成功',
-              type: 'success'
-            })
-            this.listAll()
-          }
-        })
-        .catch(err => {
-          console.error(err)
-        })
-    },
-    //清除缓存
-    clearInfo() {
-      this.registerForm.username = ''
-      this.registerForm.password = ''
-      this.registerForm.sex = ''
-      this.registerForm.birth = ''
-      this.registerForm.location = ''
-      this.registerForm.introduction = ''
-      this.registerForm.phoneNumber = ''
-      this.registerForm.email = ''
-    },
-    //修改用户信息按钮
-    editUserInfo() {
-      this.$http.user
-        .updateUser(JSON.stringify(this.registerForm))
-        .then(res => {
-          if (res.code === 0) {
-            this.$notify({
-              message: '修改用户信息完成',
-              type: 'success'
-            })
-          } else {
-            this.$notify({
-              message: '修改用户信息失败',
-              type: 'error'
-            })
-          }
-        })
-        .catch(err => {
-          console.error(err)
-        })
-      this.centerDialogVisible2 = false
-    },
-    //按照username查找用户
-    searchUser() {
-      let query = {
-        params: {
-          username: this.registerForm.username
-        }
-      }
-      this.$http.user.getUserByName(query).then(res => {
-        if (res.code === 0 && res.data) {
-          this.tableData = res.data
-        }
-      })
-    }
+    edit() {},
+    delete() {}
   }
 }
 </script>
