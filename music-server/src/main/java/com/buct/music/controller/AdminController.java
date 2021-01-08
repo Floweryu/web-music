@@ -1,13 +1,13 @@
 package com.buct.music.controller;
 
+import com.buct.music.controller.dto.AdminReq;
 import com.buct.music.result.CodeMsg;
 import com.buct.music.result.Result;
 import com.buct.music.service.AdminService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * @author Zhang JunFeng
@@ -25,10 +25,10 @@ public class AdminController {
     }
 
     @PostMapping("/login/status")
-    public Result<CodeMsg> loginStatus(@RequestParam String username, @RequestParam String password) {
+    public Result<CodeMsg> loginStatus(@RequestBody AdminReq adminReq) {
         try {
-            boolean flag = adminService.verifyPassword(username, password);
-            log.info("登录用户信息为：username: {}, password: {}", username, password);
+            boolean flag = adminService.verifyPassword(adminReq.getUsername(), adminReq.getPassword());
+            log.info("登录用户信息为：username: {}, password: {}", adminReq.getUsername(), adminReq.getPassword());
             if (flag) {
                 return Result.success(CodeMsg.LOGIN_SUCCESS);
             } else {

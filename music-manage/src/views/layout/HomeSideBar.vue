@@ -45,17 +45,17 @@ const menuList = [
   {
     title: '歌手管理',
     index: '/dashboard/singer',
-    icon: 'el-icon-s-platform'
+    icon: 'el-icon-s-management'
   },
   {
     title: '用户管理',
     index: '/dashboard/user',
-    icon: 'el-icon-s-platform'
+    icon: 'el-icon-s-custom'
   },
   {
     title: '歌曲管理',
     index: '/dashboard/songs',
-    icon: 'el-icon-s-platform'
+    icon: 'el-icon-s-data'
   }
 ]
 export default {
