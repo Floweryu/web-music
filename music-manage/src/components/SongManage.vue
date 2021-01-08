@@ -60,14 +60,11 @@ export default {
   created() {
     this.$http.songs.getAllSongsWithSingerName().then(res => {
       if (res.code === 0 && res.data) {
-        console.log(res.data)
+        // console.log(res.data)
         this.tableData = res.data
       }
       console.log(this.tableData)
     })
-  },
-  updated() {
-    console.log(this.tableData)
   },
   methods: {
     edit() {},
