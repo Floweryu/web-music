@@ -92,47 +92,59 @@ export default {
   methods: {
     // 新增歌手信息
     addSinger() {
-      this.$http.singer
-        .addSinger(JSON.stringify(this.formData))
-        .then(res => {
-          if (res.code === 0) {
-            this.$notify({
-              message: '添加歌手成功',
-              type: 'success'
-            })
-            this.$parent.getAllSingers()
-          }
-        })
-        .catch(() => {
-          this.$notify.error({
-            message: '添加歌手失败'
+      if (this.checkForm()) {
+        this.$http.singer
+          .addSinger(JSON.stringify(this.formData))
+          .then(res => {
+            if (res.code === 0) {
+              this.$notify({
+                message: '添加歌手成功',
+                type: 'success'
+              })
+              this.$parent.getAllSingers()
+            }
           })
-        })
-      this.$emit('dialog-cancel') // 关闭弹窗
+          .catch(() => {
+            this.$notify.error({
+              message: '添加歌手失败'
+            })
+          })
+        this.$emit('dialog-cancel') // 关闭弹窗
+      }
     },
     // 保存歌手信息
     saveSinger() {
-      this.$http.singer
-        .updateSinger(JSON.stringify(this.formData))
-        .then(res => {
-          if (res.code === 0) {
-            this.$notify({
-              message: '歌手信息更新成功',
-              type: 'success'
-            })
-            this.$parent.getAllSingers()
-          }
-        })
-        .catch(() => {
-          this.$notify.error({
-            message: '歌手信息更新失败'
+      if (this.checkForm()) {
+        this.$http.singer
+          .updateSinger(JSON.stringify(this.formData))
+          .then(res => {
+            if (res.code === 0) {
+              this.$notify({
+                message: '歌手信息更新成功',
+                type: 'success'
+              })
+              this.$parent.getAllSingers()
+            }
           })
-        })
-      this.$emit('dialog-cancel') // 关闭弹窗
+          .catch(() => {
+            this.$notify.error({
+              message: '歌手信息更新失败'
+            })
+          })
+        this.$emit('dialog-cancel') // 关闭弹窗
+      }
     },
     // 关闭弹窗
     cancel() {
       this.$emit('dialog-cancel')
+    },
+    // 检查表单是否符合要求
+    checkForm() {
+      if (this.formData.name === '' || typeof this.formData.name === 'undefined') {
+        alert('歌手姓名不能为空！')
+        return false
+      }
+      return true
     }
   }
 }
