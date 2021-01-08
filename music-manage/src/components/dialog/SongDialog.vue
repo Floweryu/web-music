@@ -72,7 +72,6 @@ export default {
   watch: {
     // 监听点击编辑按钮传递的参数
     editValue(newValue) {
-      console.log(newValue)
       let _formData = {
         id: newValue.id,
         singerId: newValue.singerId,
@@ -99,9 +98,10 @@ export default {
             this.$parent.getAllSongsWithSingerName()
           }
         })
-        .catch(() => {
+        .catch(err => {
+          // console.log(err)
           this.$notify.error({
-            message: '添加歌曲失败'
+            message: err
           })
         })
       this.$emit('dialog-cancel') // 关闭弹窗
@@ -111,6 +111,7 @@ export default {
       this.$http.songs
         .updateSong(JSON.stringify(this.formData))
         .then(res => {
+          console.log(res.code)
           if (res.code === 0) {
             this.$notify({
               message: '歌曲信息更新成功',
@@ -119,9 +120,10 @@ export default {
             this.$parent.getAllSongsWithSingerName()
           }
         })
-        .catch(() => {
+        .catch(err => {
+          // console.log(err)
           this.$notify.error({
-            message: '歌曲信息更新失败'
+            message: err
           })
         })
       this.$emit('dialog-cancel') // 关闭弹窗
