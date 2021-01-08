@@ -15,7 +15,7 @@ const user = {
     return axios.delete(`${host.apiHost}/admin/user`, params)
   },
   //更新用户
-  updateUser(data) {
+  updatUser(data) {
     return axios.put(`${host.apiHost}/admin/user`, {}, data)
   }
 }

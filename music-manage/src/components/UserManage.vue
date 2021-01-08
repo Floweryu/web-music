@@ -40,44 +40,8 @@
         </el-form-item>
       </el-form>
       <span slot="footer">
-        <el-button size="mini" @click="addUser" type="success">确定</el-button>
-        <el-button size="mini" @click="centerDialogVisible = false" type="danger">取消</el-button>
-      </span>
-    </el-dialog>
-
-    <el-dialog title="修改用户信息" :visible.sync="centerDialogVisible2" width="400px" center>
-      <el-form :model="registerForm" ref="registerForm" label-width="80px">
-        <el-form-item prop="username" label="用户名" size="mini">
-          <el-input v-model="registerForm.username" placeholder="用户名"></el-input>
-        </el-form-item>
-        <el-form-item prop="password" label="密码" size="mini">
-          <el-input v-model="registerForm.password" placeholder="密码" show-password></el-input>
-        </el-form-item>
-        <el-form-item label="性别" size="mini">
-          <el-radio-group v-model="registerForm.sex">
-            <el-radio :label="0">女</el-radio>
-            <el-radio :label="1">男</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item prop="birth" label="生日" size="mini">
-          <el-date-picker type="date" placeholder="选择日期" v-model="registerForm.birth" style="width: 100%"></el-date-picker>
-        </el-form-item>
-        <el-form-item prop="location" label="地区" size="mini">
-          <el-input v-model="registerForm.location" placeholder="地区"></el-input>
-        </el-form-item>
-        <el-form-item prop="phoneNumber" label="手机号" size="mini">
-          <el-input v-model="registerForm.phoneNumber" placeholder="手机号"></el-input>
-        </el-form-item>
-        <el-form-item prop="email" label="邮箱" size="mini">
-          <el-input v-model="registerForm.email" placeholder="邮箱"></el-input>
-        </el-form-item>
-        <el-form-item prop="introduction" label="简介" size="mini">
-          <el-input v-model="registerForm.introduction" placeholder="简介" type="textarea"></el-input>
-        </el-form-item>
-      </el-form>
-      <span slot="footer">
-        <el-button size="mini" @click="editUserInfo" type="success">保存</el-button>
-        <el-button size="mini" @click="centerDialogVisible2 = false" type="danger">取消</el-button>
+        <el-button size="mini" @click="addUser">确定</el-button>
+        <el-button size="mini" @click="centerDialogVisible = false">取消</el-button>
       </span>
     </el-dialog>
     <el-card class="body">
