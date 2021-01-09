@@ -8,7 +8,9 @@ package com.buct.music.enums;
 public enum FilePathEnum {
     IMG_PATH("img"),
     SINGER_PIC("singerPic"),
-    SINGER_PIC_PATH(IMG_PATH, SINGER_PIC);
+    SINGER_PIC_PATH(IMG_PATH, SINGER_PIC),
+    USER_AVATAR("userAvatar"),
+    USER_AVATAR_PATH(IMG_PATH,USER_AVATAR);
 
     private final String path;
 

@@ -1,14 +1,19 @@
 package com.buct.music.controller;
 
+import com.buct.music.controller.dto.SingerReq;
 import com.buct.music.controller.dto.UserReq;
 import com.buct.music.domin.Singer;
 import com.buct.music.domin.User;
+import com.buct.music.enums.FilePathEnum;
 import com.buct.music.result.CodeMsg;
 import com.buct.music.result.Result;
 import com.buct.music.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -140,6 +145,77 @@ public class UserController {
             return Result.success(users);
         } catch (Throwable throwable) {
             log.error("There is something error: {}", throwable.getMessage());
+            return Result.error(CodeMsg.SERVER_ERROR);
+        }
+    }
+    /**
+     * 更新用户图片
+     * @param picture   要更新的图片
+     * @param id    用户id
+     * @return  Result<CodeMsg>
+     */
+    @PostMapping("/user/updatePic")
+    public Result<CodeMsg> updateUserPic(@RequestParam("file") MultipartFile picture, @RequestParam Long id){
+        if (picture.isEmpty()) {
+            return Result.error(400, "picture upload failed");
+        }
+
+        String type = picture.getContentType();
+        if (type != null && !type.equals("image/jpeg") && !type.equals("image/png")) {
+            return Result.error(400, "the type of picture should be 'jpg/jpeg/png' !");
+        }
+
+        long size = picture.getSize();
+        if (size / 1024 / 1024 > 2) {
+            return Result.error(400, "the size of picture should be < 2M !");
+        }
+
+        if (id <= 0) {
+            return Result.error(400, "id should > 0 !");
+        }
+
+        // 文件名 = 当前时间毫秒 + 原文件名
+        String newFileName = System.currentTimeMillis() + picture.getOriginalFilename();
+
+        // 文件存储路径——文件夹（绝对路径）
+        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator")
+                + FilePathEnum.IMG_PATH.getPath() + System.getProperty("file.separator")
+                + FilePathEnum.USER_AVATAR.getPath();
+
+        File file = new File(filePath);
+        if (!file.exists() && !file.isDirectory()) {
+            log.info("file directory is not exits");
+            boolean flag = file.mkdirs();
+            if (flag) {
+                log.info("create a directory successed");
+            } else {
+                log.info("create a directory failed");
+            }
+        }
+
+        // 实际文件存储地址(绝对路径)
+        File fileToPath = new File(filePath + System.getProperty("file.separator") + newFileName);
+
+        // 存储到数据库的相对文件路径
+        String databaseFilePath = FilePathEnum.USER_AVATAR_PATH.getPath() + newFileName;
+
+        try {
+            // 将文件存储到磁盘
+            picture.transferTo(fileToPath);
+            UserReq userReq = new UserReq();
+            userReq.setId(id);
+            userReq.setAvator(databaseFilePath);
+            boolean flag = userService.update(userReq);
+
+            log.info("文件更新信息：id: {}, 文件在磁盘位置: {}, 存储到数据库中信息: {}", id, fileToPath, databaseFilePath);
+            if (flag) {
+                return Result.success(CodeMsg.SUCCESS);
+            }else {
+                return Result.error(CodeMsg.FAILURE);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            log.error("上传文件失败，异常信息： {}", e.getMessage());
             return Result.error(CodeMsg.SERVER_ERROR);
         }
     }

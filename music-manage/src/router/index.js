@@ -8,6 +8,7 @@ const UserManage = () => import('@/components/UserManage')
 
 const SongManage = () => import('@/components/SongManage')
 const Login = () => import('@/components/Login')
+const Home = () => import('@/components/Home')
 
 Vue.use(VueRouter)
 
@@ -25,6 +26,11 @@ const routes = [
     path: '/dashboard',
     component: Index,
     children: [
+      {
+        path: 'home',
+        component: Home,
+        meta: { title: '首页' }
+      },
       {
         path: 'singer',
         component: SingerManage,
