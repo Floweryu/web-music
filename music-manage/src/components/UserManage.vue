@@ -4,7 +4,7 @@
       <div class="handle-box">
         <el-button type="primary" size="mini" @click="addUserDialog"> 添加用户 </el-button>
         <div class="search">
-          <el-input class="searchInput" prefix-icon="el-icon-search" placeholder="请输入用户名" v-model="registerForm.username"></el-input>
+          <el-input class="searchInput" prefix-icon="el-icon-search" placeholder="请输入用户名" v-model="searchFom.username"></el-input>
           <el-button type="primary" size="mini" icon="el-icon-search" @click="searchUser">搜索</el-button>
         </div>
       </div>
@@ -149,7 +149,11 @@ export default {
         location: '',
         introduction: '',
         phoneNumber: '',
-        email: ''
+        email: '',
+        avator: ''
+      },
+      searchFom: {
+        username: ''
       }
     }
   },
@@ -166,6 +170,11 @@ export default {
             this.$notify({
               message: '添加成功',
               type: 'success'
+            })
+          } else {
+            this.$notify({
+              message: '添加失败',
+              type: 'error'
             })
           }
           this.centerDialogVisible = false
@@ -244,8 +253,13 @@ export default {
               message: '删除成功',
               type: 'success'
             })
-            this.listAll()
+          } else {
+            this.$notify({
+              message: '删除失败',
+              type: 'error'
+            })
           }
+          this.listAll()
         })
         .catch(err => {
           console.error(err)
@@ -288,7 +302,7 @@ export default {
     searchUser() {
       let query = {
         params: {
-          username: this.registerForm.username
+          username: this.searchFom.username
         }
       }
       this.$http.user.getUserByName(query).then(res => {
@@ -335,7 +349,8 @@ export default {
         })
       } else {
         this.$notify.error({
-          message: '图片上传失败'
+          message: '图片上传失败',
+          type: 'error'
         })
       }
     }
