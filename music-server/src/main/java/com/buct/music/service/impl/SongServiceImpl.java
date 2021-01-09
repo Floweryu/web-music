@@ -67,14 +67,14 @@ public class SongServiceImpl implements SongService {
 
     // 根据歌曲姓名查找歌曲
     @Override
-    public List<Song> selectByName(String name) {
+    public List<SongReq> selectByName(String name) {
         String likeName = name.trim();
         return songMapper.selectByName("%" + likeName + "%");
     }
 
     // 根据歌手姓名查找歌曲
     @Override
-    public List<Song> selectBySinger(String name) {
+    public List<SongReq> selectBySinger(String name) {
         String likeName = name.trim();
         SingerServiceImpl singerServiceImpl = new SingerServiceImpl(singerMapper);
         Long tempId = singerServiceImpl.getSingerId(likeName);

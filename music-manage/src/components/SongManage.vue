@@ -6,20 +6,13 @@
   <div class="song">
     <Header>
       <el-button slot="left" size="mini" type="primary" @click="addSong" round icon="el-icon-plus">添加歌曲</el-button>
-      <el-input
-        slot="right"
-        class="input"
-        v-model="input"
-        prefix-icon="el-icon-search"
-        @clear="searchData"
-        size="mini"
-        clearable
-        autosize
-        placeholder="请输入搜索关键词"
-      ></el-input>
-      <el-button slot="right" class="search-button" @click="searchData" type="primary" size="mini" icon="el-icon-search" round>
-        搜索
-      </el-button>
+      <el-input placeholder="请输入内容" v-model="select" slot="right" size="mini">
+        <el-select v-model="selectValue" slot="prepend" placeholder="搜索类别">
+          <el-option label="歌曲名" value="歌曲名"></el-option>
+          <el-option label="歌手名" value="歌手名"></el-option>
+        </el-select>
+        <el-button slot="append" icon="el-icon-search" @click="Search">搜索</el-button>
+      </el-input>
     </Header>
     <el-card class="body">
       <el-table
@@ -91,7 +84,8 @@ export default {
       isEditButton: false,
       dialogFormVisible: false,
       editValue: {},
-      selectRows: []
+      selectRows: [],
+      selectValue: ''
     }
   },
   created() {
@@ -104,6 +98,15 @@ export default {
       this.dialogFormVisible = val
       this.editValue = {}
     },
+    // 查找
+    search() {
+      if (this.selectValue === '歌曲名') this.searchBySong()
+      else this.searchBySinger()
+    },
+    // 查找歌曲
+    searchBySong() {},
+    // 查找歌手对应歌曲
+    searchBySinger() {},
     // 编辑歌曲信息
     editSong(index, row) {
       this.isEditButton = true

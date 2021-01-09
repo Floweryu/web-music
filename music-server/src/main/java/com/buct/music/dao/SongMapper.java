@@ -31,10 +31,10 @@ public interface SongMapper {
     List<Song> selectAllSongs();
 
     // 根据歌曲名字模糊查询
-    List<Song> selectByName(String name);
+    List<SongReq> selectByName(String name);
 
     // 根据歌手名字查询
-    List<Song> selectBySinger(Long singerId);
+    List<SongReq> selectBySinger(Long singerId);
 
     // 查询所有歌曲，并包含对应歌手名字
     List<SongReq> selectAllSongsWithSingerName();

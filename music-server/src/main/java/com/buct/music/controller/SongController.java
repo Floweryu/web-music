@@ -131,9 +131,9 @@ public class SongController {
      * @return Result<List<Song>>
      */
     @GetMapping("/songs/name")
-    public Result<List<Song>> getSongByName(@RequestParam String name) {
+    public Result<List<SongReq>> getSongByName(@RequestParam String name) {
         try {
-            List<Song> songList = songService.selectByName(name);
+            List<SongReq> songList = songService.selectByName(name);
             log.info("根据名字查找歌曲: {}", songList);
             return Result.success(songList);
         } catch (Throwable throwable) {
@@ -148,9 +148,9 @@ public class SongController {
      * @return Result<List<Song>>
      */
     @GetMapping("/songs/singer_name")
-    public Result<List<Song>> getSongBySinger(@RequestParam String name) {
+    public Result<List<SongReq>> getSongBySinger(@RequestParam String name) {
         try {
-            List<Song> songList = songService.selectBySinger(name);
+            List<SongReq> songList = songService.selectBySinger(name);
             log.info("根据歌手名字查找歌曲: {}", songList);
             return Result.success(songList);
         } catch (Throwable throwable) {

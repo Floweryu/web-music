@@ -139,17 +139,17 @@
         where song.singer_id = singer.id
     </select>
 
-    <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+    <select id="selectByName" resultMap="ResultMapWithSingerName" parameterType="java.lang.String">
         select
-        <include refid="Base_Column_List" />
-        from song
-        where name like #{name}
+        <include refid="Column_List_With_Singer_Name" />
+        from song, singer
+        where song.singer_id = singer.id and song.name like #{name}
     </select>
 
-    <select id="selectBySinger" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    <select id="selectBySinger" resultMap="ResultMapWithSingerName" parameterType="java.lang.Long">
         select
-        <include refid="Base_Column_List" />
-        from song
-        where singer_id = #{singerId}
+        <include refid="Column_List_With_Singer_Name" />
+        from song, singer
+        where song.singer_id = singer.id and singer.id = #{singerId}
     </select>
 </mapper>
