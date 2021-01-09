@@ -1,5 +1,20 @@
+<!--
+ * @Author Jeffrey
+ * @Date: 2021-01-08 
+-->
 <template>
   <div class="song">
+    <Header>
+      <el-button slot="left" size="mini" type="primary" @click="addSong" round icon="el-icon-plus">添加歌曲</el-button>
+      <el-select slot="right" size="mini" v-model="selectValue" placeholder="搜索类别">
+        <el-option label="歌曲名" value="歌曲名"></el-option>
+        <el-option label="歌手名" value="歌手名"></el-option>
+        <el-option label="简介" value="简介"></el-option>
+      </el-select>
+      <el-input placeholder="请输入内容" v-model="searchValue" slot="right" size="mini" clearable @clear="search">
+        <el-button slot="append" icon="el-icon-search" @click="search">搜索</el-button>
+      </el-input>
+    </Header>
     <el-card class="body">
       <el-table
         :data="tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)"
@@ -8,27 +23,26 @@
         border
         stripe
       >
-        <el-table-column prop="pic" label="封面图" min-width="10%" align="center" />
-        <el-table-column prop="name" label="歌名" min-width="10%" align="center" />
-        <el-table-column prop="singerId" label="歌手id" min-width="5%" align="center" />
+        <el-table-column prop="pic" label="歌曲封面" min-width="10%" align="center" />
+        <el-table-column prop="name" label="歌名" min-width="5%" align="center" />
         <el-table-column prop="singerName" label="歌手" min-width="5%" align="center" />
         <el-table-column prop="url" label="路径" min-width="10%" align="center" />
-        <el-table-column prop="introduction" label="简介" min-width="20%" align="center" />
+        <el-table-column prop="introduction" label="简介" min-width="30%" align="center" />
         <el-table-column label="操作" min-width="10%" align="center">
           <template slot-scope="scope">
             <el-button
-              @click="edit(scope.$index, scope.row)"
+              @click="editSong(scope.$index, scope.row)"
               size="mini"
               type="primary"
-              icon="el-icon-plus"
+              icon="el-icon-edit"
               style="width: 50px; padding: 7px 0;"
               >编辑
             </el-button>
             <el-button
-              @click="delete (scope.$index, scope.row)"
+              @click="deleteSong(scope.$index, scope.row)"
               size="mini"
               type="danger"
-              icon="el-icon-plus"
+              icon="el-icon-delete"
               style="width: 50px; padding: 7px 0;"
               >删除</el-button
             >
@@ -43,52 +57,167 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
     />
+    <song-dialog
+      ref="child"
+      :is-edit-button="isEditButton"
+      :edit-value="editValue"
+      :dialog-visible="dialogFormVisible"
+      @dialog-cancel="dialogCancel"
+    />
   </div>
 </template>
 
 <script>
+import Header from '@/components/common/Header'
 import { pageSeparate } from '@/utils/mixin'
+import SongDialog from '@/components/dialog/SongDialog'
 
 export default {
   name: 'SongManage',
+  components: {
+    Header,
+    SongDialog
+  },
   mixins: [pageSeparate],
   data() {
     return {
-      tableData: []
+      tableData: [],
+      isEditButton: false,
+      dialogFormVisible: false,
+      editValue: {},
+      selectRows: [],
+      selectValue: '',
+      searchValue: ''
     }
   },
   created() {
-    this.$http.songs.getAllSongs().then(res => {
-      if (res.code === 0 && res.data) {
-        let data = res.data
-        data.forEach(item => {
-          item.singerName = 'Unknown'
-          this.$http.singer
-            .getSingerById({
-              params: {
-                id: item.singerId
-              }
-            })
-            .then(res => {
-              let singerName = res.data.name
-              Object.defineProperty(item, 'singerName', {
-                get() {
-                  return singerName
-                }
-              })
-            })
-        })
-        this.tableData = data
-      }
-      console.log(this.tableData)
-    })
-  },
-  updated() {
-    console.log(this.tableData)
+    this.getAllSongsWithSingerName()
   },
   methods: {
-    edit() {},
-    delete() {}
+    // 添加歌曲
+    addSong(val) {
+      this.isEditButton = false
+      this.dialogFormVisible = val
+      this.editValue = {}
+    },
+    // 查找
+    search() {
+      let val = this.searchValue
+      if (this.selectValue === '歌曲名') this.searchBySong(val)
+      else if (this.selectValue === '歌手名') this.searchBySinger(val)
+      else this.searchByIntroduction(val)
+    },
+    // 查找歌曲
+    searchBySong(val) {
+      this.$http.songs
+        .getSongsByName({
+          params: {
+            name: val
+          }
+        })
+        .then(res => {
+          if (res.code === 0 && res.data) {
+            this.tableData = res.data
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    // 查找歌手对应歌曲
+    searchBySinger(val) {
+      this.$http.songs
+        .getSongsBySingerName({
+          params: {
+            name: val
+          }
+        })
+        .then(res => {
+          if (res.code === 0 && res.data) {
+            this.tableData = res.data
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    // 根据简介查找歌曲
+    searchByIntroduction(val) {
+      this.$http.songs
+        .getSongsByIntroduction({
+          params: {
+            keyword: val
+          }
+        })
+        .then(res => {
+          if (res.code === 0 && res.data) {
+            this.tableData = res.data
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    // 编辑歌曲信息
+    editSong(index, row) {
+      this.isEditButton = true
+      this.dialogFormVisible = true
+      this.editValue = row
+    },
+    // 接收弹窗的取消事件
+    dialogCancel() {
+      this.dialogFormVisible = false
+    },
+    // 获取带歌手名的歌曲列表
+    getAllSongsWithSingerName() {
+      this.$http.songs.getAllSongsWithSingerName().then(res => {
+        if (res.code === 0 && res.data) {
+          this.tableData = res.data
+        }
+      })
+    },
+    // 删除歌曲时的API操作
+    deleteSongApi(data) {
+      let query = {
+        params: {
+          id: data
+        }
+      }
+      this.$http.songs
+        .deleteSong(query)
+        .then(res => {
+          if (res.code === 0) {
+            this.$notify({
+              message: '删除歌曲成功',
+              type: 'success'
+            })
+            this.getAllSongsWithSingerName()
+          }
+        })
+        .catch(err => {
+          this.$notify.error({
+            message: err + ': 删除歌曲失败'
+          })
+        })
+    },
+    // 删除歌手信息
+    async deleteSong(index, row) {
+      this.$confirm('此操作将永久删除歌曲, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(async () => {
+          let data = row.id
+          await this.deleteSongApi(data)
+        })
+        .catch(err => {
+          console.log(err)
+          this.$notify.error({
+            message: err + ': 取消删除操作'
+          })
+        })
+    }
   }
 }
 </script>

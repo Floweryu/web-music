@@ -8,7 +8,7 @@ const songs = {
   },
   // 更新歌曲
   updateSong(data) {
-    return axios.put(`${host.apiHost}/admin/songs`, {}, data)
+    return axios.put(`${host.apiHost}/admin/songs`, data)
   },
   // 删除歌曲
   deleteSong(params) {
@@ -22,13 +22,21 @@ const songs = {
   getAllSongs() {
     return axios.get(`${host.apiHost}/admin/songs`)
   },
+  // 获取所有带歌手名字的歌曲
+  getAllSongsWithSingerName() {
+    return axios.get(`${host.apiHost}/admin/songs/songs_with_singer_name`)
+  },
   // 根据歌名查询歌曲
   getSongsByName(params) {
     return axios.get(`${host.apiHost}/admin/songs/name`, params)
   },
-  // 根据歌手姓名查询歌手
+  // 根据歌手姓名查询歌曲
   getSongsBySingerName(params) {
     return axios.get(`${host.apiHost}/admin/songs/singer_name`, params)
+  },
+  // 根据简介查询歌曲
+  getSongsByIntroduction(params) {
+    return axios.get(`${host.apiHost}/admin/songs/introduction`, params)
   }
 }
 

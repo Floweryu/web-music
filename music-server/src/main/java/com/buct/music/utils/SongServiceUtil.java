@@ -32,7 +32,7 @@ public class SongServiceUtil {
         if (singerId != null) {
             song.setSingerId(singerId);
         }
-        if (singerId == null && singerName != null) {
+        if (singerName != null) {
             // 先要根据歌手姓名调用歌手id;
             Long tempSingerId = singerMapper.getSingerId(singerName);
             song.setSingerId(tempSingerId);
