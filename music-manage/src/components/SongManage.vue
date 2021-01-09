@@ -217,8 +217,11 @@ export default {
     getAllSongsWithSingerName() {
       this.$http.songs.getAllSongsWithSingerName().then(res => {
         if (res.code === 0 && res.data) {
+          res.data.forEach(element => {
+            // console.log(element)
+            if (!element.pic) element.pic = '/img/songPic/tubiao.jpg'
+          })
           this.tableData = res.data
-          console.log(res.data.pic)
         }
       })
     },
