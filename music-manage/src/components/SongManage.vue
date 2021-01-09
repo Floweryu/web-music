@@ -6,12 +6,12 @@
   <div class="song">
     <Header>
       <el-button slot="left" size="mini" type="primary" @click="addSong" round icon="el-icon-plus">添加歌曲</el-button>
-      <el-input placeholder="请输入内容" v-model="select" slot="right" size="mini">
-        <el-select v-model="selectValue" slot="prepend" placeholder="搜索类别">
-          <el-option label="歌曲名" value="歌曲名"></el-option>
-          <el-option label="歌手名" value="歌手名"></el-option>
-        </el-select>
-        <el-button slot="append" icon="el-icon-search" @click="Search">搜索</el-button>
+      <el-select slot="right" size="mini" v-model="selectValue" placeholder="搜索类别">
+        <el-option label="歌曲名" value="歌曲名"></el-option>
+        <el-option label="歌手名" value="歌手名"></el-option>
+      </el-select>
+      <el-input placeholder="请输入内容" v-model="searchValue" slot="right" size="mini" clearable @clear="search">
+        <el-button slot="append" icon="el-icon-search" @click="search">搜索</el-button>
       </el-input>
     </Header>
     <el-card class="body">
@@ -85,7 +85,8 @@ export default {
       dialogFormVisible: false,
       editValue: {},
       selectRows: [],
-      selectValue: ''
+      selectValue: '',
+      searchValue: ''
     }
   },
   created() {
@@ -100,13 +101,44 @@ export default {
     },
     // 查找
     search() {
-      if (this.selectValue === '歌曲名') this.searchBySong()
-      else this.searchBySinger()
+      let val = this.searchValue
+      if (this.selectValue === '歌曲名') this.searchBySong(val)
+      else this.searchBySinger(val)
     },
     // 查找歌曲
-    searchBySong() {},
+    searchBySong(val) {
+      this.$http.songs
+        .getSongsByName({
+          params: {
+            name: val
+          }
+        })
+        .then(res => {
+          if (res.code === 0 && res.data) {
+            this.tableData = res.data
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
     // 查找歌手对应歌曲
-    searchBySinger() {},
+    searchBySinger(val) {
+      this.$http.songs
+        .getSongsBySingerName({
+          params: {
+            name: val
+          }
+        })
+        .then(res => {
+          if (res.code === 0 && res.data) {
+            this.tableData = res.data
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
     // 编辑歌曲信息
     editSong(index, row) {
       this.isEditButton = true
