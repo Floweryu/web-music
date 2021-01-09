@@ -9,6 +9,7 @@
       <el-select slot="right" size="mini" v-model="selectValue" placeholder="搜索类别">
         <el-option label="歌曲名" value="歌曲名"></el-option>
         <el-option label="歌手名" value="歌手名"></el-option>
+        <el-option label="简介" value="简介"></el-option>
       </el-select>
       <el-input placeholder="请输入内容" v-model="searchValue" slot="right" size="mini" clearable @clear="search">
         <el-button slot="append" icon="el-icon-search" @click="search">搜索</el-button>
@@ -103,7 +104,8 @@ export default {
     search() {
       let val = this.searchValue
       if (this.selectValue === '歌曲名') this.searchBySong(val)
-      else this.searchBySinger(val)
+      else if (this.selectValue === '歌手名') this.searchBySinger(val)
+      else this.searchByIntroduction(val)
     },
     // 查找歌曲
     searchBySong(val) {
@@ -128,6 +130,23 @@ export default {
         .getSongsBySingerName({
           params: {
             name: val
+          }
+        })
+        .then(res => {
+          if (res.code === 0 && res.data) {
+            this.tableData = res.data
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    // 根据简介查找歌曲
+    searchByIntroduction(val) {
+      this.$http.songs
+        .getSongsByIntroduction({
+          params: {
+            keyword: val
           }
         })
         .then(res => {

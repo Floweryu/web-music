@@ -30,9 +30,13 @@ const songs = {
   getSongsByName(params) {
     return axios.get(`${host.apiHost}/admin/songs/name`, params)
   },
-  // 根据歌手姓名查询歌手
+  // 根据歌手姓名查询歌曲
   getSongsBySingerName(params) {
     return axios.get(`${host.apiHost}/admin/songs/singer_name`, params)
+  },
+  // 根据简介查询歌曲
+  getSongsByIntroduction(params) {
+    return axios.get(`${host.apiHost}/admin/songs/introduction`, params)
   }
 }
 
