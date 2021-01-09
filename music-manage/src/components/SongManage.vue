@@ -4,7 +4,23 @@
 -->
 <template>
   <div class="song">
-    <!-- <header-top @input-data="searchData" @add-singer="addSinger" -->
+    <Header>
+      <el-button slot="left" size="mini" type="primary" @click="addSong" round icon="el-icon-plus">添加歌曲</el-button>
+      <el-input
+        slot="right"
+        class="input"
+        v-model="input"
+        prefix-icon="el-icon-search"
+        @clear="searchData"
+        size="mini"
+        clearable
+        autosize
+        placeholder="请输入搜索关键词"
+      ></el-input>
+      <el-button slot="right" class="search-button" @click="searchData" type="primary" size="mini" icon="el-icon-search" round>
+        搜索
+      </el-button>
+    </Header>
     <el-card class="body">
       <el-table
         :data="tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)"
@@ -58,14 +74,14 @@
 </template>
 
 <script>
-// import HeaderTop from '@/components/common/HeaderTop'
+import Header from '@/components/common/Header'
 import { pageSeparate } from '@/utils/mixin'
-import SongDialog from '@/components/dialog/SongDialog.vue'
+import SongDialog from '@/components/dialog/SongDialog'
 
 export default {
   name: 'SongManage',
   components: {
-    // HeaderTop
+    Header,
     SongDialog
   },
   mixins: [pageSeparate],
@@ -82,6 +98,12 @@ export default {
     this.getAllSongsWithSingerName()
   },
   methods: {
+    // 添加歌曲
+    addSong(val) {
+      this.isEditButton = false
+      this.dialogFormVisible = val
+      this.editValue = {}
+    },
     // 编辑歌曲信息
     editSong(index, row) {
       this.isEditButton = true
