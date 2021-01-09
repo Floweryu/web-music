@@ -163,6 +163,7 @@ export default {
   methods: {
     //添加用户
     addUser() {
+      this.registerForm.avator = '/img/userAvatar/avatar.png'
       this.$http.user
         .addUser(JSON.stringify(this.registerForm))
         .then(res => {

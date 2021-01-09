@@ -43,6 +43,11 @@
 <script>
 const menuList = [
   {
+    title: '首页',
+    index: '/dashboard/home',
+    icon: 'el-icon-s-home'
+  },
+  {
     title: '歌手管理',
     index: '/dashboard/singer',
     icon: 'el-icon-s-management'
