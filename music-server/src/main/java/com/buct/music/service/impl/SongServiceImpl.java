@@ -72,6 +72,13 @@ public class SongServiceImpl implements SongService {
         return songMapper.selectByName("%" + likeName + "%");
     }
 
+    // 根据简介查找歌曲
+    @Override
+    public List<SongReq> selectByIntroduction(String keyword) {
+        String likeString = keyword.trim();
+        return songMapper.selectByIntroduction("%" + likeString + "%");
+    }
+
     // 根据歌手姓名查找歌曲
     @Override
     public List<SongReq> selectBySinger(String name) {

@@ -128,7 +128,7 @@ public class SongController {
     /**
      * 根据歌曲名字查找歌曲
      * @param name 前端传入的歌曲名字
-     * @return Result<List<Song>>
+     * @return Result<List<SongReq>>
      */
     @GetMapping("/songs/name")
     public Result<List<SongReq>> getSongByName(@RequestParam String name) {
@@ -145,7 +145,7 @@ public class SongController {
     /**
      * 根据歌手名字查找对应歌曲
      * @param name 前端传入的歌曲名字
-     * @return Result<List<Song>>
+     * @return Result<List<SongReq>>
      */
     @GetMapping("/songs/singer_name")
     public Result<List<SongReq>> getSongBySinger(@RequestParam String name) {
@@ -168,6 +168,23 @@ public class SongController {
         try {
             List<SongReq> songList = songService.getAllSongsWithSinger();
             log.info("所有歌曲: {}", songList);
+            return Result.success(songList);
+        } catch (Throwable throwable) {
+            log.error("There is something error: {}", throwable.getMessage());
+            return Result.error(CodeMsg.SERVER_ERROR);
+        }
+    }
+
+    /**
+     * 根据歌曲名字查找歌曲
+     * @param keyword 前端传入的简介关键词
+     * @return Result<List<SongReq>>
+     */
+    @GetMapping("/songs/introduction")
+    public Result<List<SongReq>> getSongByIntroduction(@RequestParam String keyword) {
+        try {
+            List<SongReq> songList = songService.selectByIntroduction(keyword);
+            log.info("根据名字查找歌曲: {}", songList);
             return Result.success(songList);
         } catch (Throwable throwable) {
             log.error("There is something error: {}", throwable.getMessage());

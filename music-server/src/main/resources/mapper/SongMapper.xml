@@ -146,6 +146,13 @@
         where song.singer_id = singer.id and song.name like #{name}
     </select>
 
+    <select id="selectByIntroduction" resultMap="ResultMapWithSingerName" parameterType="java.lang.String">
+        select
+        <include refid="Column_List_With_Singer_Name" />
+        from song, singer
+        where song.singer_id = singer.id and song.introduction like #{keyword}
+    </select>
+
     <select id="selectBySinger" resultMap="ResultMapWithSingerName" parameterType="java.lang.Long">
         select
         <include refid="Column_List_With_Singer_Name" />

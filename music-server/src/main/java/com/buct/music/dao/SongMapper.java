@@ -38,4 +38,7 @@ public interface SongMapper {
 
     // 查询所有歌曲，并包含对应歌手名字
     List<SongReq> selectAllSongsWithSingerName();
+
+    // 根据简介查询歌曲
+    List<SongReq> selectByIntroduction(String keyword);
 }

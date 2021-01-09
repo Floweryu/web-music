@@ -33,4 +33,7 @@ public interface SongService {
 
     // 返回带歌手名字的歌曲数据
     List<SongReq> getAllSongsWithSinger();
+
+    // 根据简介查询歌曲
+    List<SongReq> selectByIntroduction(String keyword);
 }
