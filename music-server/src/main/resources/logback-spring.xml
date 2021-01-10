@@ -90,7 +90,7 @@
 
             <root level="INFO">
 
-                <springProfile name="local,dev">
+                <springProfile name="local,prod">
                     <appender-ref ref="STDOUT"/>
                 </springProfile>
 
