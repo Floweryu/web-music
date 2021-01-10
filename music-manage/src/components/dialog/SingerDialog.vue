@@ -93,6 +93,7 @@ export default {
     // 新增歌手信息
     addSinger() {
       if (this.checkForm()) {
+        this.formData.pic = '/img/singerPic/avatar.png'
         this.$http.singer
           .addSinger(JSON.stringify(this.formData))
           .then(res => {
