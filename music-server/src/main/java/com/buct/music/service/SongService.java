@@ -26,8 +26,14 @@ public interface SongService {
     List<Song> selectAllSongs();
 
     // 根据歌曲名字模糊查询
-    List<Song> selectByName(String name);
+    List<SongReq> selectByName(String name);
 
     // 根据歌手名字模糊查询
-    List<Song> selectBySinger(String name);
+    List<SongReq> selectBySinger(String name);
+
+    // 返回带歌手名字的歌曲数据
+    List<SongReq> getAllSongsWithSinger();
+
+    // 根据简介查询歌曲
+    List<SongReq> selectByIntroduction(String keyword);
 }
