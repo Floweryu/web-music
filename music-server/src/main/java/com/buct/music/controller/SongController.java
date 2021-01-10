@@ -46,7 +46,7 @@ public class SongController {
             else
                 return Result.error(CodeMsg.FAILURE);
         } catch (Throwable throwable) {
-            log.error("There is som+ething error: {}", throwable.getMessage());
+            log.error("There is something error: {}", throwable.getMessage());
             return Result.error(CodeMsg.SERVER_ERROR);
         }
     }
@@ -203,7 +203,7 @@ public class SongController {
      * @param id    歌曲
      * @return  Result<CodeMsg>
      */
-    @PostMapping("/songs/updatePic")
+    @PostMapping("/songs/update_pic")
     public Result<CodeMsg> updateSongPic(@RequestParam("file") MultipartFile picture, @RequestParam Long id){
         if (picture.isEmpty()) {
             return Result.error(400, "picture upload failed");
@@ -276,15 +276,10 @@ public class SongController {
      * @param id    歌曲
      * @return  Result<CodeMsg>
      */
-    @PostMapping("/songs/updateSong")
+    @PostMapping("/songs/update_song")
     public Result<CodeMsg> updateSong(@RequestParam("file") MultipartFile song, @RequestParam Long id){
         if (song.isEmpty()) {
-            return Result.error(400, "picture upload failed");
-        }
-
-        String type = song.getContentType();
-        if (type != null && !type.equals("audio/mp3")) {
-            return Result.error(400, "the type of the song should be 'mp3' !");
+            return Result.error(400, "song upload failed");
         }
 
         // 文件名 = 当前时间毫秒 + 原文件名
@@ -299,7 +294,7 @@ public class SongController {
             log.info("file directory does not exits");
             boolean flag = file.mkdirs();
             if (flag) {
-                log.info("create a directory successed");
+                log.info("create a directory success");
             } else {
                 log.info("create a directory failed");
             }

@@ -76,6 +76,13 @@
       :dialog-visible="dialogFormVisible"
       @dialog-cancel="dialogCancel"
     />
+    <add-song-dialog
+      ref="child"
+      :is-edit-button="isEditButton"
+      :edit-value="editValue"
+      :dialog-visible="addSongDialogFormVisible"
+      @dialog-cancel="dialogCancel"
+    />
   </div>
 </template>
 
@@ -83,12 +90,14 @@
 import Header from '@/components/common/Header'
 import { pageSeparate } from '@/utils/mixin'
 import SongDialog from '@/components/dialog/SongDialog'
+import AddSongDialog from '@/components/dialog/AddSongDialog'
 
 export default {
   name: 'SongManage',
   components: {
     Header,
-    SongDialog
+    SongDialog,
+    AddSongDialog
   },
   mixins: [pageSeparate],
   data() {
@@ -96,6 +105,7 @@ export default {
       tableData: [],
       isEditButton: false,
       dialogFormVisible: false,
+      addSongDialogFormVisible: false,
       editValue: {},
       selectRows: [],
       selectValue: '',
@@ -108,7 +118,7 @@ export default {
   methods: {
     // 图片上传地址
     uploadUrl(id) {
-      return `${process.env.VUE_APP_BASE_URL}/admin/songs/updatePic?id=${id}`
+      return `${process.env.VUE_APP_BASE_URL}/admin/songs/update_pic?id=${id}`
     },
     // 校验图片格式
     beforeUpload(file) {
@@ -140,9 +150,9 @@ export default {
       }
     },
     // 添加歌曲
-    addSong(val) {
+    addSong() {
       this.isEditButton = false
-      this.dialogFormVisible = val
+      this.addSongDialogFormVisible = true
       this.editValue = {}
     },
     // 查找
@@ -212,6 +222,7 @@ export default {
     // 接收弹窗的取消事件
     dialogCancel() {
       this.dialogFormVisible = false
+      this.addSongDialogFormVisible = false
     },
     // 获取带歌手名的歌曲列表
     getAllSongsWithSingerName() {

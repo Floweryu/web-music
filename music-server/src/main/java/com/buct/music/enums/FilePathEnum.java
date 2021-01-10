@@ -13,7 +13,7 @@ public enum FilePathEnum {
     SONG_PIC("songPic"),
     SINGER_PIC_PATH(IMG_PATH, SINGER_PIC),
     SONG_PIC_PATH(IMG_PATH, SONG_PIC),
-    SONG_PATH("song");
+    SONG_PATH("song/");
 
     private final String path;
 
