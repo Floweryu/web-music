@@ -4,7 +4,7 @@
       <div class="handle-box">
         <el-button type="primary" size="mini" @click="addUserDialog"> 添加用户 </el-button>
         <div class="search">
-          <el-input class="searchInput" prefix-icon="el-icon-search" placeholder="请输入用户名" v-model="registerForm.username"></el-input>
+          <el-input class="searchInput" prefix-icon="el-icon-search" placeholder="请输入用户名" v-model="searchFom.username"></el-input>
           <el-button type="primary" size="mini" icon="el-icon-search" @click="searchUser">搜索</el-button>
         </div>
       </div>
@@ -88,7 +88,19 @@
         border
         stripe
       >
-        <el-table-column prop="pic" label="图片" min-width="10%" align="center" />
+        <el-table-column prop="pic" label="头像" min-width="5%" align="center">
+          <template slot-scope="scope">
+            <el-upload
+              class="avatar-uploader"
+              :action="uploadUrl(scope.row.id)"
+              :before-upload="beforeUpload"
+              :on-success="handleImgSuccess"
+              name="file"
+            >
+              <img :src="scope.row.avator" class="avatar" />
+            </el-upload>
+          </template>
+        </el-table-column>
         <el-table-column prop="username" label="用户名" min-width="10%" align="center" />
         <el-table-column prop="password" label="密码" min-width="10%" align="center" />
         <el-table-column prop="sex" label="性别" min-width="5%" align="center" />
@@ -137,7 +149,11 @@ export default {
         location: '',
         introduction: '',
         phoneNumber: '',
-        email: ''
+        email: '',
+        avator: ''
+      },
+      searchFom: {
+        username: ''
       }
     }
   },
@@ -147,6 +163,7 @@ export default {
   methods: {
     //添加用户
     addUser() {
+      this.registerForm.avator = '/img/userAvatar/avatar.png'
       this.$http.user
         .addUser(JSON.stringify(this.registerForm))
         .then(res => {
@@ -154,6 +171,11 @@ export default {
             this.$notify({
               message: '添加成功',
               type: 'success'
+            })
+          } else {
+            this.$notify({
+              message: '添加失败',
+              type: 'error'
             })
           }
           this.centerDialogVisible = false
@@ -232,8 +254,13 @@ export default {
               message: '删除成功',
               type: 'success'
             })
-            this.listAll()
+          } else {
+            this.$notify({
+              message: '删除失败',
+              type: 'error'
+            })
           }
+          this.listAll()
         })
         .catch(err => {
           console.error(err)
@@ -276,14 +303,57 @@ export default {
     searchUser() {
       let query = {
         params: {
-          username: this.registerForm.username
+          username: this.searchFom.username
         }
       }
       this.$http.user.getUserByName(query).then(res => {
         if (res.code === 0 && res.data) {
+          res.data.forEach(item => {
+            let time = new Date(item.birth)
+            item.birth = formatDate(time, 'yyyy-MM-dd')
+            if (item.sex == 0) {
+              item.sex = '女'
+            } else if (item.sex == 1) {
+              item.sex = '男'
+            }
+          })
           this.tableData = res.data
         }
       })
+    },
+    // 图片上传地址
+    uploadUrl(id) {
+      return `${process.env.VUE_APP_BASE_URL}/admin/user/updatePic?id=${id}`
+    },
+    // 校验图片格式
+    beforeUpload(file) {
+      const isPic = file.type === 'image/jpeg' || file.type === 'image/png'
+      if (!isPic) {
+        this.$message.error('上传的头像图片必须为 jpg 或 png 格式')
+        return false
+      }
+
+      const size = file.size / 1024 / 1024
+      if (size >= 2) {
+        this.$message.error('上传的头像图片大小必须小于 2M ')
+        return false
+      }
+      return true
+    },
+    // 上传图片成功后
+    handleImgSuccess(res) {
+      if (res.code === 0) {
+        this.listAll()
+        this.$notify({
+          message: '图片上传并更新成功',
+          type: 'success'
+        })
+      } else {
+        this.$notify.error({
+          message: '图片上传失败',
+          type: 'error'
+        })
+      }
     }
   }
 }
@@ -301,5 +371,18 @@ export default {
 }
 .search {
   display: flex;
+}
+.avatar-uploader {
+  width: 50px;
+  height: 50px;
+}
+.el-upload--text {
+  width: 50px;
+  height: 50px;
+}
+.avatar {
+  width: 50px;
+  height: 50px;
+  display: block;
 }
 </style>
