@@ -12,7 +12,7 @@ avatorImg/
 ### vue ###
 node_modules
 /dist
-/admin
+admin/
 
 
 ### STS ###
