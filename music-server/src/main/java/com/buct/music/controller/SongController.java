@@ -198,7 +198,7 @@ public class SongController {
     }
 
     /**
-     * 更新歌手图片
+     * 更新歌曲图片
      * @param picture   要更新的图片
      * @param id    歌曲
      * @return  Result<CodeMsg>
@@ -255,6 +255,69 @@ public class SongController {
             SongReq songReq = new SongReq();
             songReq.setId(id);
             songReq.setPic(databaseFilePath);
+            boolean flag = songService.update(songReq);
+
+            log.info("文件更新信息：id: {}, 文件在磁盘位置: {}, 存储到数据库中信息: {}", id, fileToPath, databaseFilePath);
+            if (flag) {
+                return Result.success(CodeMsg.SUCCESS);
+            }else {
+                return Result.error(CodeMsg.FAILURE);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            log.error("上传文件失败，异常信息： {}", e.getMessage());
+            return Result.error(CodeMsg.SERVER_ERROR);
+        }
+    }
+
+    /**
+     * 更新歌曲
+     * @param song   要更新的歌曲
+     * @param id    歌曲
+     * @return  Result<CodeMsg>
+     */
+    @PostMapping("/songs/updateSong")
+    public Result<CodeMsg> updateSong(@RequestParam("file") MultipartFile song, @RequestParam Long id){
+        if (song.isEmpty()) {
+            return Result.error(400, "picture upload failed");
+        }
+
+        String type = song.getContentType();
+        if (type != null && !type.equals("audio/mp3")) {
+            return Result.error(400, "the type of the song should be 'mp3' !");
+        }
+
+        // 文件名 = 当前时间毫秒 + 原文件名
+        String newFileName = System.currentTimeMillis() + song.getOriginalFilename();
+
+        // 文件存储路径——文件夹（绝对路径）
+        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator")
+                + FilePathEnum.SONG_PATH.getPath();
+
+        File file = new File(filePath);
+        if (!file.exists() && !file.isDirectory()) {
+            log.info("file directory does not exits");
+            boolean flag = file.mkdirs();
+            if (flag) {
+                log.info("create a directory successed");
+            } else {
+                log.info("create a directory failed");
+            }
+        }
+
+        // 实际文件存储地址(绝对路径)
+        File fileToPath = new File(filePath + System.getProperty("file.separator") + newFileName);
+
+        // 存储到数据库的相对文件路径
+        String databaseFilePath = FilePathEnum.SONG_PATH.getPath() + newFileName;
+
+        try {
+            // 将文件存储到磁盘
+            song.transferTo(fileToPath);
+
+            SongReq songReq = new SongReq();
+            songReq.setId(id);
+            songReq.setUrl(databaseFilePath);
             boolean flag = songService.update(songReq);
 
             log.info("文件更新信息：id: {}, 文件在磁盘位置: {}, 存储到数据库中信息: {}", id, fileToPath, databaseFilePath);
