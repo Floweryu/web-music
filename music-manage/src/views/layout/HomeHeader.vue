@@ -13,7 +13,7 @@
     <div>
       <div class="header-right">
         <div class="user-avator">
-          <img src="~/assets/img/user.jpg" />
+          <img src="~/assets/image/user.jpg" />
         </div>
         <el-dropdown class="user-name" trigger="click" @command="handleCommand">
           <span class="el-dropdown-link">
