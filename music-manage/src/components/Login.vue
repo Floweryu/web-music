@@ -44,7 +44,7 @@ export default {
       this.$http.admin.verifyPassword(JSON.stringify(this.ruleForm)).then(res => {
         if (res.code === 0) {
           localStorage.setItem('username', this.ruleForm.username)
-          this.$router.push('/dashboard')
+          this.$router.push('/dashboard/home')
           this.notify('登陆成功', 'success')
         } else {
           this.notify('登陆失败', 'error')
