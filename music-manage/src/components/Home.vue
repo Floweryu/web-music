@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main">
     <div class="body">
       <div class="container circle">
         <div class="box1 circle center"></div>
@@ -26,7 +26,7 @@
       <p class="font">北京化工大学</p>
     </div>
     <div class="el-table">
-      <el-table border="true" :data="tableData" fit="true">
+      <el-table :data="tableData">
         <el-table-column prop="duty" label="职责" width="100"></el-table-column>
         <el-table-column prop="name" label="姓名" width="100"></el-table-column>
         <el-table-column prop="class" label="班级" width="100"></el-table-column>
@@ -72,35 +72,53 @@ export default {
 </script>
 
 <style scoped>
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  vertical-align: center;
+  flex-direction: column;
+    background: radial-gradient(#353c44, #222931);
+    /* padding: 0; */
+}
 .el-table {
-  margin: auto;
+  /* display: inline; */
+  /* position: relative; */
+  /* left: 10%; */
   width: 750px;
-  padding: 10px;
+  padding: 5px;
   margin-top: 10px;
   border-radius: 2%;
 }
 .fontLink {
-  font-size: 40px;
+  font-size: 30px;
   font-weight: 1000;
   color: darkgray;
 }
 .font {
-  font-size: 40px;
+  font-size: 30px;
   font-weight: 1000;
+  color: white;
 }
 .content {
   margin: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  /* display: inline; */
+  /* left: 50%; */
+  /* position: relative; */
 }
 .body {
   /* 弹性布局 让页面元素垂直+水平居中 */
-  display: flex;
+  /* display: inline; */
+  /* display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
   /* 让页面始终占浏览器可视区域高度 */
-  height: 40vh;
+  margin-top: 20px;
+  height: 350px;
+  /* margin: 10px; */
+  /* position: relative; */
+  /* left: 40%; */
+  /* margin-left: -50px; */
 }
 /* 定义一下几个盒子相同的部分 */
 .circle {
