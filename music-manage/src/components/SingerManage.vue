@@ -134,6 +134,24 @@ export default {
       }
       this.$http.singer.getSingerByName(query).then(res => {
         if (res.code === 0 && res.data) {
+          let data = res.data
+          data.forEach(item => {
+            if (item.birth) {
+              let time = new Date(item.birth)
+              item.birth = formatDate(time, 'yyyy-MM-dd')
+            }
+            switch (item.sex) {
+              case 0:
+                item._sex = '女'
+                break
+              case 1:
+                item._sex = '男'
+                break
+              case 2:
+                item._sex = '组合'
+                break
+            }
+          })
           this.tableData = res.data
         }
       })
