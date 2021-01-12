@@ -58,7 +58,7 @@ export default {
 <style scoped>
 .login-wrap {
   position: fixed;
-  background: url('../assets/img/background.jpg');
+  background: url('../assets/image/background.jpg');
   background-attachment: fixed;
   background-position: center;
   background-size: cover;
